@@ -30,27 +30,27 @@ const menu: MenuItem[] = [
     icon: LayoutDashboard,
   },
   {
-    label: "Operações e Demandas",
+    label: "Módulos e Registros",
     icon: ClipboardList,
     children: [
-      { label: "Demandas", icon: ClipboardList },
-      { label: "Alocações", icon: Users },
-      { label: "Releases", icon: Package },
-      { label: "Tecnologias", icon: Wrench },
+      { label: "Registros", icon: ClipboardList },
+      { label: "Pessoas", icon: Users },
+      { label: "Pacotes", icon: Package },
+      { label: "Ferramentas", icon: Wrench },
     ],
   },
   {
-    label: "Clientes e Contratos",
+    label: "Cadastros",
     icon: Users,
     children: [],
   },
   {
-    label: "Recursos Humanos",
+    label: "Equipe",
     icon: UserCog,
     children: [],
   },
   {
-    label: "Administração",
+    label: "Configurações",
     icon: Settings,
     children: [],
   },
@@ -59,7 +59,7 @@ const menu: MenuItem[] = [
 export function AppSidebar() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState<Record<string, boolean>>({
-    "Operações e Demandas": true,
+    "Módulos e Registros": true,
   });
 
   const toggle = (label: string) =>
@@ -84,7 +84,7 @@ export function AppSidebar() {
             const hasChildren = item.children && item.children.length > 0;
             const isInicioActive = item.label === "Início" && pathname === "/";
             const isParentActive =
-              item.label === "Operações e Demandas" &&
+              item.label === "Módulos e Registros" &&
               pathname.startsWith("/operacoes-demandas");
 
             if (!hasChildren) {
@@ -147,12 +147,12 @@ export function AppSidebar() {
                     {item.children!.map((sub, index) => {
                       const SubIcon = sub.icon;
                       const isSubActive =
-                        item.label === "Operações e Demandas" &&
+                        item.label === "Módulos e Registros" &&
                         index === 0 &&
                         pathname === "/operacoes-demandas/demandas";
                       const isDemandasItem =
-                        item.label === "Operações e Demandas" &&
-                        sub.label === "Demandas";
+                        item.label === "Módulos e Registros" &&
+                        sub.label === "Registros";
                       return (
                         <li key={`${item.label}-${sub.label}`}>
                           {isDemandasItem ? (
@@ -194,7 +194,7 @@ export function AppSidebar() {
       </nav>
 
       <div className="border-t px-4 py-3 text-xs text-muted-foreground">
-        Ambiente de validação WT
+        Sandbox de validação WT
       </div>
     </aside>
   );

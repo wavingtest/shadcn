@@ -4,7 +4,6 @@ import * as React from "react";
 import { Plus } from "lucide-react";
 import type { NewDemandaInput } from "../page";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -33,15 +32,15 @@ const clientes = [
 ];
 
 const contratos = [
-  { value: "Contrato 001/2025", label: "Contrato 001/2025" },
-  { value: "Contrato 002/2025", label: "Contrato 002/2025" },
-  { value: "Contrato 003/2025", label: "Contrato 003/2025" },
+  { value: "Categoria A", label: "Categoria A" },
+  { value: "Categoria B", label: "Categoria B" },
+  { value: "Categoria C", label: "Categoria C" },
 ];
 
 const gerentes = [
-  { value: "Gerente A", label: "Gerente A" },
-  { value: "Gerente B", label: "Gerente B" },
-  { value: "Gerente C", label: "Gerente C" },
+  { value: "Responsável A", label: "Responsável A" },
+  { value: "Responsável B", label: "Responsável B" },
+  { value: "Responsável C", label: "Responsável C" },
 ];
 
 const metodologias = [
@@ -55,9 +54,9 @@ const metodologias = [
 ];
 
 const tiposServico = [
-  { value: "Desenvolvimento", label: "Desenvolvimento" },
-  { value: "Sustentação", label: "Sustentação" },
-  { value: "Consultoria", label: "Consultoria" },
+  { value: "Operação", label: "Operação" },
+  { value: "Análise", label: "Análise" },
+  { value: "Acompanhamento", label: "Acompanhamento" },
 ];
 
 type FormState = NewDemandaInput;
@@ -125,9 +124,9 @@ export function DemandaDrawer({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-xl">
         <SheetHeader>
-          <SheetTitle>Cadastrar Demanda</SheetTitle>
+          <SheetTitle>Novo Registro</SheetTitle>
           <SheetDescription>
-            Preencha os dados para cadastrar uma nova demanda
+            Preencha os dados para criar um novo registro de teste
           </SheetDescription>
         </SheetHeader>
 
@@ -162,7 +161,7 @@ export function DemandaDrawer({
 
             <div className="flex flex-col gap-2">
               <Label htmlFor="select-contrato">
-                Contrato
+                Categoria
                 <Required />
               </Label>
               <Select
@@ -172,7 +171,7 @@ export function DemandaDrawer({
                 }
               >
                 <SelectTrigger id="select-contrato" aria-required>
-                  <SelectValue placeholder="Selecione um Contrato" />
+                  <SelectValue placeholder="Selecione uma categoria" />
                 </SelectTrigger>
                 <SelectContent>
                   {contratos.map((contrato) => (
@@ -187,14 +186,14 @@ export function DemandaDrawer({
 
           <div className="flex flex-col gap-2">
             <Label htmlFor="input-descricao">
-              Descrição da Demanda
+              Título do Registro
               <Required />
             </Label>
             <Input
               id="input-descricao"
               name="descricao"
               maxLength={225}
-              placeholder="Sistema de Vendas Online"
+              placeholder="Ex: Registro de Teste 01"
               aria-required
               value={formState.descricao}
               onChange={(event) =>
@@ -209,14 +208,14 @@ export function DemandaDrawer({
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="flex flex-col gap-2">
               <Label htmlFor="input-sigla">
-                Sigla da Demanda
+                Código do Registro
                 <Required />
               </Label>
               <Input
                 id="input-sigla"
                 name="sigla"
                 maxLength={25}
-                placeholder="Ex: SVD"
+                placeholder="Ex: REG01"
                 aria-required
                 value={formState.sigla}
                 onChange={(event) =>
@@ -230,7 +229,7 @@ export function DemandaDrawer({
 
             <div className="flex flex-col gap-2">
               <Label htmlFor="input-preposto">
-                Preposto
+                Contato
                 <Required />
               </Label>
               <Input
@@ -250,7 +249,7 @@ export function DemandaDrawer({
 
             <div className="flex flex-col gap-2">
               <Label htmlFor="select-gerente">
-                Gerente
+                Responsável
                 <Required />
               </Label>
               <Select
@@ -260,7 +259,7 @@ export function DemandaDrawer({
                 }
               >
                 <SelectTrigger id="select-gerente" aria-required>
-                  <SelectValue placeholder="Selecione um Gerente" />
+                  <SelectValue placeholder="Selecione um responsável" />
                 </SelectTrigger>
                 <SelectContent>
                   {gerentes.map((gerente) => (
@@ -273,51 +272,28 @@ export function DemandaDrawer({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="select-tipoServico">
-                Tipo de Serviço
-                <Required />
-              </Label>
-              <Select
-                value={formState.tipoServico}
-                onValueChange={(value) =>
-                  setFormState((prev) => ({ ...prev, tipoServico: value }))
-                }
-              >
-                <SelectTrigger id="select-tipoServico" aria-required>
-                  <SelectValue placeholder="Selecione um tipo de serviço" />
-                </SelectTrigger>
-                <SelectContent>
-                  {tiposServico.map((t) => (
-                    <SelectItem key={t.value} value={t.value}>
-                      {t.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex items-end">
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  id="checkbox-compartilhaProfissionais"
-                  checked={formState.compartilhaProfissionais}
-                  onCheckedChange={(value) =>
-                    setFormState((prev) => ({
-                      ...prev,
-                      compartilhaProfissionais: Boolean(value),
-                    }))
-                  }
-                />
-                <Label
-                  htmlFor="checkbox-compartilhaProfissionais"
-                  className="cursor-pointer"
-                >
-                  Compartilha Profissionais
-                </Label>
-              </div>
-            </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="select-tipoServico">
+              Tipo de Registro
+              <Required />
+            </Label>
+            <Select
+              value={formState.tipoServico}
+              onValueChange={(value) =>
+                setFormState((prev) => ({ ...prev, tipoServico: value }))
+              }
+            >
+              <SelectTrigger id="select-tipoServico" aria-required>
+                <SelectValue placeholder="Selecione um tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                {tiposServico.map((t) => (
+                  <SelectItem key={t.value} value={t.value}>
+                    {t.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -344,32 +320,6 @@ export function DemandaDrawer({
             </Select>
           </div>
 
-          <section className="rounded-md border p-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold">Releases</h3>
-              <Button type="button" variant="outline" size="sm">
-                <Plus className="mr-2 h-4 w-4" />
-                Adicionar Releases
-              </Button>
-            </div>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Nenhuma Release adicionada ainda
-            </p>
-          </section>
-
-          <section className="rounded-md border p-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold">Tecnologias</h3>
-              <Button type="button" variant="outline" size="sm">
-                <Plus className="mr-2 h-4 w-4" />
-                Adicionar Tecnologia
-              </Button>
-            </div>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Nenhuma tecnologia adicionada ainda
-            </p>
-          </section>
-
           <SheetFooter className="px-0 pb-0">
             <SheetClose asChild>
               <Button type="button" variant="outline">
@@ -377,7 +327,7 @@ export function DemandaDrawer({
               </Button>
             </SheetClose>
             <Button type="submit" disabled={!isValid} aria-disabled={!isValid}>
-              Cadastrar Demanda
+              Salvar Registro
             </Button>
           </SheetFooter>
         </form>

@@ -22,10 +22,9 @@ export default function HomePage() {
               biblioteca <strong>shadcn/ui</strong> para validação do WT.
             </p>
             <p className="mb-5 text-sm text-foreground">
-              Para testar o cenário principal de cadastro com selects e drawer,
-              navegue no menu lateral em{" "}
-              <strong>Operações e Demandas &gt; Demandas</strong> ou clique no
-              botão abaixo.
+              Para testar o fluxo principal de cadastro e consulta, navegue no
+              menu lateral em <strong>Módulos e Registros &gt; Registros</strong>{" "}
+              ou clique no botão abaixo.
             </p>
 
             <Button asChild>

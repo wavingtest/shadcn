@@ -51,22 +51,23 @@ type Demanda = {
   centroCusto: string;
   preposto: string;
   gerente: string;
-  termino: string;
   sigla: string;
+  tipoServico: string;
+  metodologia: string;
 };
 
 const searchTypes: Array<{ value: SearchType; label: string }> = [
-  { value: "demanda", label: "Demanda" },
+  { value: "demanda", label: "Registro" },
   { value: "cliente", label: "Cliente" },
-  { value: "sigla", label: "Sigla" },
-  { value: "gerente", label: "Gerente" },
+  { value: "sigla", label: "Código" },
+  { value: "gerente", label: "Responsável" },
 ];
 
 const orderByOptions: Array<{ value: OrderBy; label: string }> = [
   { value: "none", label: "Sem ordenação" },
-  { value: "demanda", label: "Demanda" },
+  { value: "demanda", label: "Registro" },
   { value: "cliente", label: "Cliente" },
-  { value: "termino", label: "Término" },
+  { value: "termino", label: "Status" },
 ];
 
 export default function DemandasPage() {
@@ -85,10 +86,11 @@ export default function DemandasPage() {
       demanda: payload.descricao,
       cliente: payload.cliente,
       centroCusto: payload.contrato,
-      preposto: payload.preposto || "Preposto não informado",
+      preposto: payload.preposto || "Contato não informado",
       gerente: payload.gerente,
-      termino: "Em aberto",
       sigla: payload.sigla,
+      tipoServico: payload.tipoServico,
+      metodologia: payload.metodologia,
     };
 
     setDemandas((prev) => [demanda, ...prev]);
@@ -140,13 +142,13 @@ export default function DemandasPage() {
           ? a.demanda
           : orderBy === "cliente"
             ? a.cliente
-            : a.termino;
+            : a.sigla;
       const bValue =
         orderBy === "demanda"
           ? b.demanda
           : orderBy === "cliente"
             ? b.cliente
-            : b.termino;
+            : b.sigla;
 
       const compare = aValue.localeCompare(bValue, "pt-BR", {
         sensitivity: "base",
@@ -160,18 +162,18 @@ export default function DemandasPage() {
 
   return (
     <>
-      <AppHeader title="Demandas" />
+      <AppHeader title="Registros" />
       <main className="flex-1 space-y-4 p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-semibold tracking-tight">Demandas</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">Registros</h2>
             <p className="text-sm text-muted-foreground">
-              Gerencie todas as demandas do sistema
+              Gerencie os registros de teste do ambiente
             </p>
           </div>
           <Button onClick={() => setOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
-            Cadastrar Demanda
+            Novo Registro
           </Button>
         </div>
 
@@ -226,7 +228,7 @@ export default function DemandasPage() {
 
         <Card>
           <CardHeader className="flex-row items-center justify-between space-y-0">
-            <CardTitle>Lista de Demandas</CardTitle>
+            <CardTitle>Lista de Registros</CardTitle>
             <div className="flex items-center gap-2">
               <Select
                 value={orderBy}
@@ -259,37 +261,37 @@ export default function DemandasPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Demanda</TableHead>
+                  <TableHead>Registro</TableHead>
+                  <TableHead>Código</TableHead>
                   <TableHead>Cliente</TableHead>
-                  <TableHead>Centro de Custo</TableHead>
-                  <TableHead>Preposto</TableHead>
-                  <TableHead>Gerente</TableHead>
-                  <TableHead>Término</TableHead>
-                  <TableHead className="text-right">Ações</TableHead>
+                  <TableHead>Categoria</TableHead>
+                  <TableHead>Contato</TableHead>
+                  <TableHead>Responsável</TableHead>
+                  <TableHead>Tipo de Registro</TableHead>
+                  <TableHead>Metodologia</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {displayedDemandas.length === 0 ? (
                   <TableRow>
                     <TableCell
-                      colSpan={7}
+                      colSpan={8}
                       className="py-12 text-center text-sm text-muted-foreground"
                     >
-                      Nenhuma Demanda encontrada
+                      Nenhum registro encontrado
                     </TableCell>
                   </TableRow>
                 ) : (
                   displayedDemandas.map((demanda) => (
                     <TableRow key={demanda.id}>
                       <TableCell>{demanda.demanda}</TableCell>
+                      <TableCell>{demanda.sigla}</TableCell>
                       <TableCell>{demanda.cliente}</TableCell>
                       <TableCell>{demanda.centroCusto}</TableCell>
                       <TableCell>{demanda.preposto}</TableCell>
                       <TableCell>{demanda.gerente}</TableCell>
-                      <TableCell>{demanda.termino}</TableCell>
-                      <TableCell className="text-right text-xs text-muted-foreground">
-                        -
-                      </TableCell>
+                      <TableCell>{demanda.tipoServico}</TableCell>
+                      <TableCell>{demanda.metodologia}</TableCell>
                     </TableRow>
                   ))
                 )}
