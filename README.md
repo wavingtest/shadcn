@@ -16,9 +16,16 @@ clientes que adotam essa stack.
 ## Páginas
 
 - `/` — **Início**: explica o objetivo do ambiente e linka para a página de teste.
-- `/operacoes-demandas/demandas` — **Demandas**: página principal de validação,
-  replicando o layout do cliente (filtros, tabela, botão de cadastro e drawer
-  de cadastro com selects, inputs, checkbox, etc.).
+- `/operacoes-demandas/demandas` — **Registros**: página principal de validação,
+  com filtros, tabela e drawer para criação de registros mockados.
+
+## Fluxo validado
+
+- Criação de registro via drawer (campos obrigatórios validados)
+- Listagem dinâmica na tabela após cadastro
+- Busca por `Registro`, `Cliente`, `Código` e `Responsável`
+- Limpeza de filtros
+- Ordenação da lista (crescente/decrescente)
 
 ## Como rodar
 
