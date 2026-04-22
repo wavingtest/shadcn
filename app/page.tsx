@@ -28,7 +28,7 @@ export default function HomePage() {
             </p>
 
             <Button asChild>
-              <Link href="/operacoes-demandas/demandas">
+              <Link href="/registros/registros">
                 <ArrowRight className="mr-2 h-4 w-4" />
                 Ir para página de teste
               </Link>

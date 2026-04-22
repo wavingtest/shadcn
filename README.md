@@ -16,7 +16,7 @@ clientes que adotam essa stack.
 ## Páginas
 
 - `/` — **Início**: explica o objetivo do ambiente e linka para a página de teste.
-- `/operacoes-demandas/demandas` — **Registros**: página principal de validação,
+- `/registros/registros` — **Registros**: página principal de validação,
   com filtros, tabela e drawer para criação de registros mockados.
 
 ## Fluxo validado

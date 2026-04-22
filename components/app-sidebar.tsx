@@ -85,7 +85,7 @@ export function AppSidebar() {
             const isInicioActive = item.label === "Início" && pathname === "/";
             const isParentActive =
               item.label === "Módulos e Registros" &&
-              pathname.startsWith("/operacoes-demandas");
+              pathname.startsWith("/registros");
 
             if (!hasChildren) {
               const isInicioItem = item.label === "Início";
@@ -149,7 +149,7 @@ export function AppSidebar() {
                       const isSubActive =
                         item.label === "Módulos e Registros" &&
                         index === 0 &&
-                        pathname === "/operacoes-demandas/demandas";
+                        pathname === "/registros/registros";
                       const isDemandasItem =
                         item.label === "Módulos e Registros" &&
                         sub.label === "Registros";
@@ -157,7 +157,7 @@ export function AppSidebar() {
                         <li key={`${item.label}-${sub.label}`}>
                           {isDemandasItem ? (
                             <Link
-                              href="/operacoes-demandas/demandas"
+                              href="/registros/registros"
                               className={cn(
                                 "flex h-9 w-full items-center gap-2.5 rounded-md px-3 text-sm transition-colors",
                                 isSubActive
