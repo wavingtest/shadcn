@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Plus } from "lucide-react";
 import type { NewDemandaInput } from "../page";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -77,7 +76,7 @@ function Required() {
   return <span className="text-destructive"> *</span>;
 }
 
-export function DemandaDrawer({
+export function RegistroDrawer({
   open,
   onOpenChange,
   onCreateDemanda,
@@ -88,11 +87,12 @@ export function DemandaDrawer({
 }) {
   const [formState, setFormState] = React.useState<FormState>(initialFormState);
 
-  React.useEffect(() => {
-    if (open) {
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (nextOpen) {
       setFormState(initialFormState);
     }
-  }, [open]);
+    onOpenChange(nextOpen);
+  };
 
   const isValid =
     formState.cliente.trim().length > 0 &&
@@ -117,11 +117,11 @@ export function DemandaDrawer({
       preposto: formState.preposto.trim(),
     });
 
-    onOpenChange(false);
+    handleOpenChange(false);
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
+    <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetContent className="w-full sm:max-w-xl">
         <SheetHeader>
           <SheetTitle>Novo Registro</SheetTitle>

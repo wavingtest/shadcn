@@ -27,7 +27,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DemandaDrawer } from "./_components/demanda-drawer";
+import { RegistroDrawer } from "./_components/registro-drawer";
 
 type SearchType = "demanda" | "cliente" | "sigla" | "gerente";
 type OrderBy = "none" | "demanda" | "cliente" | "termino";
@@ -301,7 +301,7 @@ export default function DemandasPage() {
         </Card>
       </main>
 
-      <DemandaDrawer
+      <RegistroDrawer
         open={open}
         onOpenChange={setOpen}
         onCreateDemanda={handleCreateDemanda}
