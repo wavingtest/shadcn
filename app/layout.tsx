@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppShell } from "@/components/app-shell";
 
 export const metadata: Metadata = {
   title: "WT Private • shadcn/ui",
@@ -19,10 +19,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className="min-h-screen bg-slate-50 text-foreground antialiased"
       >
-        <div className="flex min-h-screen">
-          <AppSidebar />
-          <div className="flex min-w-0 flex-1 flex-col">{children}</div>
-        </div>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

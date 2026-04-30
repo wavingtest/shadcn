@@ -1,8 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { ArrowUp, Plus, Search, X } from "lucide-react";
+import { ArrowUp, Eye, Pencil, Plus, Search, X } from "lucide-react";
 import { AppHeader } from "@/components/app-header";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,6 +13,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import {
   Select,
   SelectContent,
@@ -27,6 +35,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { SEED_REGISTROS } from "@/lib/mock-registros";
 import { RegistroDrawer } from "./_components/registro-drawer";
 
 type SearchType = "demanda" | "cliente" | "sigla" | "gerente";
@@ -44,6 +58,8 @@ export type NewDemandaInput = {
   metodologia: string;
 };
 
+type Situacao = "ativo" | "pausado" | "encerrado";
+
 type Demanda = {
   id: string;
   demanda: string;
@@ -54,6 +70,7 @@ type Demanda = {
   sigla: string;
   tipoServico: string;
   metodologia: string;
+  situacao: Situacao;
 };
 
 const searchTypes: Array<{ value: SearchType; label: string }> = [
@@ -67,8 +84,28 @@ const orderByOptions: Array<{ value: OrderBy; label: string }> = [
   { value: "none", label: "Sem ordenação" },
   { value: "demanda", label: "Registro" },
   { value: "cliente", label: "Cliente" },
-  { value: "termino", label: "Status" },
+  { value: "termino", label: "Situação" },
 ];
+
+const PAGE_SIZE = 7;
+
+const situacaoOrder: Record<Situacao, number> = {
+  ativo: 0,
+  pausado: 1,
+  encerrado: 2,
+};
+
+function situacaoBadgeVariant(s: Situacao): "default" | "secondary" | "outline" {
+  if (s === "ativo") return "default";
+  if (s === "pausado") return "secondary";
+  return "outline";
+}
+
+function labelSituacao(s: Situacao) {
+  if (s === "ativo") return "Ativo";
+  if (s === "pausado") return "Pausado";
+  return "Encerrado";
+}
 
 export default function DemandasPage() {
   const [open, setOpen] = React.useState(false);
@@ -77,7 +114,8 @@ export default function DemandasPage() {
   const [searchContentApplied, setSearchContentApplied] = React.useState("");
   const [orderBy, setOrderBy] = React.useState<OrderBy>("none");
   const [sortAsc, setSortAsc] = React.useState(true);
-  const [demandas, setDemandas] = React.useState<Demanda[]>([]);
+  const [demandas, setDemandas] = React.useState<Demanda[]>([...SEED_REGISTROS]);
+  const [page, setPage] = React.useState(1);
 
   const handleCreateDemanda = React.useCallback((payload: NewDemandaInput) => {
     const now = new Date();
@@ -91,13 +129,16 @@ export default function DemandasPage() {
       sigla: payload.sigla,
       tipoServico: payload.tipoServico,
       metodologia: payload.metodologia,
+      situacao: "ativo",
     };
 
     setDemandas((prev) => [demanda, ...prev]);
+    setPage(1);
   }, []);
 
   const handleBuscar = () => {
     setSearchContentApplied(searchContentInput.trim());
+    setPage(1);
   };
 
   const handleLimpar = () => {
@@ -106,6 +147,7 @@ export default function DemandasPage() {
     setSearchContentApplied("");
     setOrderBy("none");
     setSortAsc(true);
+    setPage(1);
   };
 
   const filteredDemandas = React.useMemo(() => {
@@ -137,18 +179,16 @@ export default function DemandasPage() {
     }
 
     items.sort((a, b) => {
+      if (orderBy === "termino") {
+        const compare =
+          situacaoOrder[a.situacao] - situacaoOrder[b.situacao];
+        return sortAsc ? compare : -compare;
+      }
+
       const aValue =
-        orderBy === "demanda"
-          ? a.demanda
-          : orderBy === "cliente"
-            ? a.cliente
-            : a.sigla;
+        orderBy === "demanda" ? a.demanda : a.cliente;
       const bValue =
-        orderBy === "demanda"
-          ? b.demanda
-          : orderBy === "cliente"
-            ? b.cliente
-            : b.sigla;
+        orderBy === "demanda" ? b.demanda : b.cliente;
 
       const compare = aValue.localeCompare(bValue, "pt-BR", {
         sensitivity: "base",
@@ -159,6 +199,20 @@ export default function DemandasPage() {
 
     return items;
   }, [filteredDemandas, orderBy, sortAsc]);
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(displayedDemandas.length / PAGE_SIZE)
+  );
+
+  const effectivePage = Math.min(page, totalPages);
+
+  const pageRows = React.useMemo(() => {
+    const start = (effectivePage - 1) * PAGE_SIZE;
+    return displayedDemandas.slice(start, start + PAGE_SIZE);
+  }, [displayedDemandas, effectivePage]);
+
+  const showPagination = displayedDemandas.length > PAGE_SIZE;
 
   return (
     <>
@@ -232,7 +286,10 @@ export default function DemandasPage() {
             <div className="flex items-center gap-2">
               <Select
                 value={orderBy}
-                onValueChange={(value) => setOrderBy(value as OrderBy)}
+                onValueChange={(value) => {
+                  setOrderBy(value as OrderBy);
+                  setPage(1);
+                }}
               >
                 <SelectTrigger id="select-orderBy" className="w-[200px]">
                   <SelectValue placeholder="Sem ordenação" />
@@ -250,7 +307,10 @@ export default function DemandasPage() {
                 aria-label={`Alternar direção da ordenação. Atual: ${sortAsc ? "crescente" : "decrescente"}`}
                 title={sortAsc ? "Ordenação crescente" : "Ordenação decrescente"}
                 className="h-9"
-                onClick={() => setSortAsc((prev) => !prev)}
+                onClick={() => {
+                  setSortAsc((prev) => !prev);
+                  setPage(1);
+                }}
               >
                 <ArrowUp className={`mr-2 h-4 w-4 transition-transform ${sortAsc ? "rotate-0" : "rotate-180"}`} />
                 <span className="text-sm">{sortAsc ? "A-Z" : "Z-A"}</span>
@@ -269,34 +329,119 @@ export default function DemandasPage() {
                   <TableHead>Responsável</TableHead>
                   <TableHead>Tipo de Registro</TableHead>
                   <TableHead>Metodologia</TableHead>
+                  <TableHead>Situação</TableHead>
+                  <TableHead className="w-[100px] text-right">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {displayedDemandas.length === 0 ? (
                   <TableRow>
                     <TableCell
-                      colSpan={8}
+                      colSpan={10}
                       className="py-12 text-center text-sm text-muted-foreground"
                     >
                       Nenhum registro encontrado
                     </TableCell>
                   </TableRow>
                 ) : (
-                  displayedDemandas.map((demanda) => (
+                  pageRows.map((demanda) => (
                     <TableRow key={demanda.id}>
                       <TableCell>{demanda.demanda}</TableCell>
                       <TableCell>{demanda.sigla}</TableCell>
                       <TableCell>{demanda.cliente}</TableCell>
                       <TableCell>{demanda.centroCusto}</TableCell>
-                      <TableCell>{demanda.preposto}</TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {demanda.preposto.trim()
+                          ? demanda.preposto
+                          : "—"}
+                      </TableCell>
                       <TableCell>{demanda.gerente}</TableCell>
                       <TableCell>{demanda.tipoServico}</TableCell>
                       <TableCell>{demanda.metodologia}</TableCell>
+                      <TableCell>
+                        <Badge variant={situacaoBadgeVariant(demanda.situacao)}>
+                          {labelSituacao(demanda.situacao)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-1">
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                aria-label="Visualizar (sandbox)"
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Visualizar (sandbox)</TooltipContent>
+                          </Tooltip>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                aria-label="Editar (sandbox)"
+                              >
+                                <Pencil className="h-4 w-4" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Editar (sandbox)</TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </TableCell>
                     </TableRow>
                   ))
                 )}
               </TableBody>
             </Table>
+            {showPagination ? (
+              <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm text-muted-foreground">
+                  Mostrando{" "}
+                  <span className="font-medium text-foreground">
+                    {(effectivePage - 1) * PAGE_SIZE + 1}
+                  </span>
+                  –
+                  <span className="font-medium text-foreground">
+                    {Math.min(
+                      effectivePage * PAGE_SIZE,
+                      displayedDemandas.length
+                    )}
+                  </span>{" "}
+                  de{" "}
+                  <span className="font-medium text-foreground">
+                    {displayedDemandas.length}
+                  </span>
+                </p>
+                <Pagination className="sm:justify-end">
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        disabled={effectivePage <= 1}
+                        onClick={() => setPage(Math.max(1, effectivePage - 1))}
+                      />
+                    </PaginationItem>
+                    <PaginationItem>
+                      <span className="px-3 text-sm text-muted-foreground">
+                        Página {effectivePage} de {totalPages}
+                      </span>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationNext
+                        disabled={effectivePage >= totalPages}
+                        onClick={() =>
+                          setPage(Math.min(totalPages, effectivePage + 1))
+                        }
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </div>
+            ) : null}
           </CardContent>
         </Card>
       </main>

@@ -3,6 +3,7 @@
 import * as React from "react";
 import type { NewDemandaInput } from "../page";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -318,6 +319,30 @@ export function RegistroDrawer({
                 ))}
               </SelectContent>
             </Select>
+          </div>
+
+          <div className="flex items-start gap-3 rounded-md border border-input bg-muted/40 px-4 py-3">
+            <Checkbox
+              id="checkbox-compartilha"
+              checked={formState.compartilhaProfissionais}
+              onCheckedChange={(value) =>
+                setFormState((prev) => ({
+                  ...prev,
+                  compartilhaProfissionais: value === true,
+                }))
+              }
+            />
+            <div className="grid gap-1">
+              <Label
+                htmlFor="checkbox-compartilha"
+                className="cursor-pointer text-sm font-medium leading-none"
+              >
+                Compartilha recursos
+              </Label>
+              <p className="text-xs text-muted-foreground">
+                Indicação simulada para o ambiente de teste (opcional).
+              </p>
+            </div>
           </div>
 
           <SheetFooter className="px-0 pb-0">

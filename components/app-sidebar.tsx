@@ -56,7 +56,7 @@ const menu: MenuItem[] = [
   },
 ];
 
-export function AppSidebar() {
+export function AppSidebar({ collapsed = false }: { collapsed?: boolean }) {
   const pathname = usePathname();
   const [open, setOpen] = React.useState<Record<string, boolean>>({
     "Módulos e Registros": true,
@@ -66,12 +66,22 @@ export function AppSidebar() {
     setOpen((s) => ({ ...s, [label]: !s[label] }));
 
   return (
-    <aside className="flex h-screen w-64 shrink-0 flex-col border-r bg-white">
-      <div className="flex items-center gap-2 border-b px-4 py-4">
+    <aside
+      className={cn(
+        "flex h-screen shrink-0 flex-col border-r bg-white transition-[width] duration-200 ease-linear",
+        collapsed ? "w-16" : "w-64"
+      )}
+    >
+      <div
+        className={cn(
+          "flex items-center border-b py-4",
+          collapsed ? "justify-center px-2" : "gap-2 px-4"
+        )}
+      >
         <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground font-bold">
           WT
         </div>
-        <div className="flex flex-col">
+        <div className={cn("flex flex-col", collapsed && "hidden")}>
           <span className="text-sm font-semibold leading-none">WT Private</span>
           <span className="text-xs text-muted-foreground">shadcn/ui</span>
         </div>
@@ -95,22 +105,32 @@ export function AppSidebar() {
                     <Link
                       href="/"
                       className={cn(
-                        "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+                        "flex w-full items-center rounded-md py-2 text-sm transition-colors",
+                        collapsed ? "justify-center px-2" : "gap-3 px-3",
                         isInicioActive
                           ? "bg-primary text-primary-foreground"
                           : "text-foreground hover:bg-accent"
                       )}
+                      title={collapsed ? item.label : undefined}
                     >
                       <Icon className="h-4 w-4 shrink-0" />
-                      <span className="truncate">{item.label}</span>
+                      <span className={cn("truncate", collapsed && "hidden")}>
+                        {item.label}
+                      </span>
                     </Link>
                   ) : (
                     <button
                       type="button"
-                      className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent"
+                      className={cn(
+                        "flex w-full items-center rounded-md py-2 text-sm text-foreground hover:bg-accent",
+                        collapsed ? "justify-center px-2" : "gap-3 px-3"
+                      )}
+                      title={collapsed ? item.label : undefined}
                     >
                       <Icon className="h-4 w-4 shrink-0" />
-                      <span className="truncate">{item.label}</span>
+                      <span className={cn("truncate", collapsed && "hidden")}>
+                        {item.label}
+                      </span>
                     </button>
                   )}
                 </li>
@@ -125,24 +145,33 @@ export function AppSidebar() {
                   type="button"
                   onClick={() => toggle(item.label)}
                   className={cn(
-                    "flex w-full items-center justify-between gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+                    "flex w-full items-center rounded-md py-2 text-sm transition-colors",
+                    collapsed ? "justify-center px-2" : "justify-between gap-3 px-3",
                     isParentActive
                       ? "bg-primary text-primary-foreground"
                       : "text-foreground hover:bg-accent"
                   )}
+                  title={collapsed ? item.label : undefined}
                 >
-                  <span className="flex items-center gap-3">
+                  <span
+                    className={cn(
+                      "flex items-center",
+                      collapsed ? "justify-center" : "gap-3"
+                    )}
+                  >
                     <Icon className="h-4 w-4 shrink-0" />
-                    <span className="truncate">{item.label}</span>
+                    <span className={cn("truncate", collapsed && "hidden")}>
+                      {item.label}
+                    </span>
                   </span>
-                  {isOpen ? (
+                  {!collapsed && isOpen ? (
                     <ChevronDown className="h-4 w-4 shrink-0" />
-                  ) : (
+                  ) : !collapsed ? (
                     <ChevronRight className="h-4 w-4 shrink-0" />
-                  )}
+                  ) : null}
                 </button>
 
-                {isOpen && item.children!.length > 0 && (
+                {!collapsed && isOpen && item.children!.length > 0 && (
                   <ul className="mt-1 flex flex-col gap-1 pl-6 pr-2">
                     {item.children!.map((sub, index) => {
                       const SubIcon = sub.icon;
@@ -193,8 +222,13 @@ export function AppSidebar() {
         </ul>
       </nav>
 
-      <div className="border-t px-4 py-3 text-xs text-muted-foreground">
-        Sandbox de validação WT
+      <div
+        className={cn(
+          "border-t py-3 text-xs text-muted-foreground",
+          collapsed ? "px-2 text-center" : "px-4"
+        )}
+      >
+        {collapsed ? "WT" : "Sandbox de validação WT"}
       </div>
     </aside>
   );
