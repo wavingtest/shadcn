@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { DatePicker } from "@/components/ui/date-picker";
 import {
   Pagination,
   PaginationContent,
@@ -71,6 +72,7 @@ type Demanda = {
   tipoServico: string;
   metodologia: string;
   situacao: Situacao;
+  createdAt: Date;
 };
 
 const searchTypes: Array<{ value: SearchType; label: string }> = [
@@ -112,9 +114,18 @@ export default function DemandasPage() {
   const [searchType, setSearchType] = React.useState<SearchType>("demanda");
   const [searchContentInput, setSearchContentInput] = React.useState("");
   const [searchContentApplied, setSearchContentApplied] = React.useState("");
+  const [searchDateInput, setSearchDateInput] = React.useState<Date | undefined>();
+  const [searchDateApplied, setSearchDateApplied] = React.useState<
+    Date | undefined
+  >();
   const [orderBy, setOrderBy] = React.useState<OrderBy>("none");
   const [sortAsc, setSortAsc] = React.useState(true);
-  const [demandas, setDemandas] = React.useState<Demanda[]>([...SEED_REGISTROS]);
+  const [demandas, setDemandas] = React.useState<Demanda[]>(
+    SEED_REGISTROS.map((seed, index) => ({
+      ...seed,
+      createdAt: new Date(2026, 3, (index % 28) + 1),
+    }))
+  );
   const [page, setPage] = React.useState(1);
 
   const handleCreateDemanda = React.useCallback((payload: NewDemandaInput) => {
@@ -130,6 +141,7 @@ export default function DemandasPage() {
       tipoServico: payload.tipoServico,
       metodologia: payload.metodologia,
       situacao: "ativo",
+      createdAt: now,
     };
 
     setDemandas((prev) => [demanda, ...prev]);
@@ -138,6 +150,7 @@ export default function DemandasPage() {
 
   const handleBuscar = () => {
     setSearchContentApplied(searchContentInput.trim());
+    setSearchDateApplied(searchDateInput);
     setPage(1);
   };
 
@@ -145,6 +158,8 @@ export default function DemandasPage() {
     setSearchType("demanda");
     setSearchContentInput("");
     setSearchContentApplied("");
+    setSearchDateInput(undefined);
+    setSearchDateApplied(undefined);
     setOrderBy("none");
     setSortAsc(true);
     setPage(1);
@@ -153,23 +168,36 @@ export default function DemandasPage() {
   const filteredDemandas = React.useMemo(() => {
     const term = searchContentApplied.toLowerCase();
 
-    if (!term) {
-      return demandas;
-    }
-
     return demandas.filter((d) => {
-      if (searchType === "demanda") {
-        return d.demanda.toLowerCase().includes(term);
-      }
-      if (searchType === "cliente") {
-        return d.cliente.toLowerCase().includes(term);
-      }
-      if (searchType === "sigla") {
-        return d.sigla.toLowerCase().includes(term);
-      }
-      return d.gerente.toLowerCase().includes(term);
+      const matchesSearchTerm =
+        !term ||
+        (searchType === "demanda"
+          ? d.demanda.toLowerCase().includes(term)
+          : searchType === "cliente"
+            ? d.cliente.toLowerCase().includes(term)
+            : searchType === "sigla"
+              ? d.sigla.toLowerCase().includes(term)
+              : d.gerente.toLowerCase().includes(term));
+
+      const matchesDate =
+        !searchDateApplied ||
+        (d.createdAt.getDate() === searchDateApplied.getDate() &&
+          d.createdAt.getMonth() === searchDateApplied.getMonth() &&
+          d.createdAt.getFullYear() === searchDateApplied.getFullYear());
+
+      return matchesSearchTerm && matchesDate;
     });
-  }, [demandas, searchContentApplied, searchType]);
+  }, [demandas, searchContentApplied, searchDateApplied, searchType]);
+  
+  const hasActiveDateFilter = Boolean(searchDateApplied);
+  
+  const filtrosGridCols = hasActiveDateFilter
+    ? "grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto]"
+    : "grid-cols-1 md:grid-cols-[1fr_1fr_auto]";
+  
+  const resumoFiltroData = hasActiveDateFilter
+    ? `Data: ${searchDateApplied!.toLocaleDateString("pt-BR")}`
+    : "Sem filtro de data";
 
   const displayedDemandas = React.useMemo(() => {
     const items = [...filteredDemandas];
@@ -232,7 +260,7 @@ export default function DemandasPage() {
         </div>
 
         <Card>
-          <CardContent className="grid grid-cols-1 gap-4 p-4 md:grid-cols-[1fr_1fr_auto]">
+          <CardContent className={`grid gap-4 p-4 ${filtrosGridCols}`}>
             <div className="flex flex-col gap-2">
               <Label htmlFor="select-searchType">Busca por</Label>
               <Select
@@ -262,6 +290,15 @@ export default function DemandasPage() {
                 onChange={(e) => setSearchContentInput(e.target.value)}
               />
             </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="input-searchDate">Data de criação</Label>
+              <DatePicker
+                id="input-searchDate"
+                value={searchDateInput}
+                onChange={setSearchDateInput}
+                placeholder="Selecione uma data"
+              />
+            </div>
             <div className="flex items-end gap-2">
               <Button type="button" aria-label="Aplicar filtros" onClick={handleBuscar}>
                 <Search className="mr-2 h-4 w-4" />
@@ -277,6 +314,9 @@ export default function DemandasPage() {
                 Limpar
               </Button>
             </div>
+            <p className="text-xs text-muted-foreground md:col-span-full">
+              {resumoFiltroData}
+            </p>
           </CardContent>
         </Card>
 

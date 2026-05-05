@@ -30,6 +30,9 @@ demonstração (principalmente em **Registros** e no **cabeçalho**):
 | Sheet          | `sheet.tsx`          | Primitive base usada para o Drawer lateral          |
 | Drawer         | `registro-drawer.tsx`| Formulário lateral de novo registro (via Sheet)     |
 | Badge          | `badge.tsx`          | Coluna **Situação** na tabela                       |
+| Popover        | `popover.tsx`        | Base de overlay para o DatePicker                   |
+| Calendar       | `calendar.tsx`       | Calendário de seleção de data                       |
+| DatePicker     | `date-picker.tsx`    | Filtro por data na página de Registros              |
 | Pagination     | `pagination.tsx`     | Navegação quando a lista excede o tamanho da página |
 | Dropdown Menu  | `dropdown-menu.tsx`  | Menu do usuário no header (itens simulados)         |
 | Separator      | `separator.tsx`      | Divisor no header (ao lado do título)               |
