@@ -38,7 +38,25 @@ demonstração (principalmente em **Registros** e no **cabeçalho**):
 | Separator      | `separator.tsx`      | Divisor no header (ao lado do título)               |
 | Tooltip        | `tooltip.tsx`        | Dicas nos botões **Visualizar** e **Editar**        |
 
-> **Nota:** novos componentes shadcn podem ser adicionados com `npx shadcn@latest add <nome>`; esta tabela reflete apenas o que está versionado e integrado ao fluxo de teste atual.
+### Prioridade alta (sandbox em `/registros/registros`)
+
+Demonstração na página **Registros**, bloco **SANDBOX WT** (`wt-component-sandbox.tsx`), com `data-wt-component` e ids `wt-*` para o WavingTest.
+
+| Componente     | Arquivo              | Dependências / notas                          |
+|----------------|----------------------|-----------------------------------------------|
+| Dialog         | `dialog.tsx`         | Modais de detalhe e formulários curtos         |
+| Alert Dialog   | `alert-dialog.tsx`   | Confirmações destrutivas                      |
+| Sonner         | `sonner.tsx`         | Toasts (`toast` de `sonner` + `<Toaster />`)  |
+| Form           | `form.tsx`           | `react-hook-form` + `zod`                     |
+| Textarea       | `textarea.tsx`       | Campos de texto longo                          |
+| Command        | `command.tsx`        | Base do Combobox (palette / busca)              |
+| Combobox       | `combobox.tsx`       | Select pesquisável (`Command` + `Popover`)    |
+| Tabs           | `tabs.tsx`           | Abas e seções                                 |
+| Skeleton       | `skeleton.tsx`       | Estados de carregamento                       |
+| Alert          | `alert.tsx`          | Mensagens inline (info, erro, aviso)          |
+| Context Menu   | `context-menu.tsx`   | Menu de contexto (ex.: clique na linha)       |
+
+> **Nota:** novos componentes shadcn podem ser adicionados com `npx shadcn@latest add <nome>`; esta tabela reflete o que está versionado no projeto.
 
 ## Páginas
 

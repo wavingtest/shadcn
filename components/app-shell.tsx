@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppSidebar } from "@/components/app-sidebar";
 import { cn } from "@/lib/utils";
@@ -42,6 +43,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
           <div className="flex min-w-0 flex-1 flex-col">{children}</div>
         </div>
+        <Toaster richColors closeButton position="top-right" />
       </TooltipProvider>
     </ShellContext.Provider>
   );

@@ -43,6 +43,7 @@ import {
 } from "@/components/ui/tooltip";
 import { SEED_REGISTROS } from "@/lib/mock-registros";
 import { RegistroDrawer } from "./_components/registro-drawer";
+import { WtComponentSandbox } from "./_components/wt-component-sandbox";
 
 type SearchType = "demanda" | "cliente" | "sigla" | "gerente";
 type OrderBy = "none" | "demanda" | "cliente" | "termino";
@@ -484,6 +485,8 @@ export default function DemandasPage() {
             ) : null}
           </CardContent>
         </Card>
+
+        <WtComponentSandbox />
       </main>
 
       <RegistroDrawer
