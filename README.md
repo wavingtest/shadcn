@@ -56,6 +56,39 @@ Demonstração na página **Registros**, bloco **SANDBOX WT** (`wt-component-san
 | Alert          | `alert.tsx`          | Mensagens inline (info, erro, aviso)          |
 | Context Menu   | `context-menu.tsx`   | Menu de contexto (ex.: clique na linha)       |
 
+### Prioridade média (sandbox em `/registros/registros`)
+
+Bloco violeta abaixo do sandbox de prioridade alta (`wt-component-sandbox-medium.tsx`).
+
+| Componente   | Arquivo            |
+|--------------|--------------------|
+| Switch       | `switch.tsx`       |
+| Radio Group  | `radio-group.tsx`  |
+| Scroll Area  | `scroll-area.tsx`  |
+| Collapsible  | `collapsible.tsx`  |
+| Accordion    | `accordion.tsx`    |
+| Avatar       | `avatar.tsx`       |
+| Breadcrumb   | `breadcrumb.tsx`   |
+| Hover Card   | `hover-card.tsx`   |
+| Progress     | `progress.tsx`     |
+
+### Prioridade baixa (sandbox em `/registros/registros`)
+
+Bloco azul-claro abaixo do sandbox de prioridade média (`wt-component-sandbox-low.tsx`).
+
+| Componente    | Arquivo             |
+|---------------|---------------------|
+| Slider        | `slider.tsx`        |
+| Toggle        | `toggle.tsx`        |
+| Toggle Group  | `toggle-group.tsx`  |
+| Input OTP     | `input-otp.tsx`     |
+| Aspect Ratio  | `aspect-ratio.tsx`  |
+| Carousel      | `carousel.tsx`      |
+| Chart         | `chart.tsx`         |
+| Resizable     | `resizable.tsx`     |
+
+> **Nota:** `Command` já existe e serve de base ao Combobox (prioridade alta).
+
 > **Nota:** novos componentes shadcn podem ser adicionados com `npx shadcn@latest add <nome>`; esta tabela reflete o que está versionado no projeto.
 
 ## Páginas

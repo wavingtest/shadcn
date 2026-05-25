@@ -44,6 +44,8 @@ import {
 import { SEED_REGISTROS } from "@/lib/mock-registros";
 import { RegistroDrawer } from "./_components/registro-drawer";
 import { WtComponentSandbox } from "./_components/wt-component-sandbox";
+import { WtComponentSandboxMedium } from "./_components/wt-component-sandbox-medium";
+import { WtComponentSandboxLow } from "./_components/wt-component-sandbox-low";
 
 type SearchType = "demanda" | "cliente" | "sigla" | "gerente";
 type OrderBy = "none" | "demanda" | "cliente" | "termino";
@@ -487,6 +489,8 @@ export default function DemandasPage() {
         </Card>
 
         <WtComponentSandbox />
+        <WtComponentSandboxMedium />
+        <WtComponentSandboxLow />
       </main>
 
       <RegistroDrawer
