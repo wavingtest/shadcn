@@ -63,7 +63,7 @@ function WtSection({
 }) {
   return (
     <section
-      id={`wt-${id}`}
+      id={`wt-${id}-section`}
       data-wt-component={id}
       className="rounded border-2 border-dashed border-sky-500 bg-sky-50/50 p-4"
     >

@@ -46,7 +46,7 @@ function WtSection({
 }) {
   return (
     <section
-      id={`wt-${id}`}
+      id={`wt-${id}-section`}
       data-wt-component={id}
       className="rounded border-2 border-dashed border-violet-500 bg-violet-50/50 p-4"
     >
@@ -73,11 +73,11 @@ export function WtComponentSandboxMedium() {
       <WtSection id="switch" title="Switch">
         <div className="flex items-center gap-3">
           <Switch
-            id="wt-switch"
+            id="wt-switch-control"
             checked={switchOn}
             onCheckedChange={setSwitchOn}
           />
-          <Label htmlFor="wt-switch">
+          <Label htmlFor="wt-switch-control">
             Compartilha recursos: {switchOn ? "ligado" : "desligado"}
           </Label>
         </div>

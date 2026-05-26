@@ -65,15 +65,36 @@ export function AppHeader({
         <DropdownMenuContent align="end" className="w-52">
           <DropdownMenuLabel>Conta sandbox</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onSelect={() => {}} disabled>
-            Perfil (simulado)
+          <DropdownMenuItem asChild>
+            <Button
+              id="wt-dropdown-perfil"
+              type="button"
+              variant="ghost"
+              className="h-auto w-full justify-start px-2 py-1.5 font-normal"
+            >
+              Perfil (simulado)
+            </Button>
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => {}} disabled>
-            Preferências (simulado)
+          <DropdownMenuItem asChild>
+            <Button
+              id="wt-dropdown-preferencias"
+              type="button"
+              variant="ghost"
+              className="h-auto w-full justify-start px-2 py-1.5 font-normal"
+            >
+              Preferências (simulado)
+            </Button>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onSelect={() => {}} disabled>
-            Sair (simulado)
+          <DropdownMenuItem asChild>
+            <Button
+              id="wt-dropdown-sair"
+              type="button"
+              variant="ghost"
+              className="h-auto w-full justify-start px-2 py-1.5 font-normal text-destructive hover:text-destructive"
+            >
+              Sair (simulado)
+            </Button>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
