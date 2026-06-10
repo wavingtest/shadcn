@@ -32,7 +32,10 @@ export type ComboboxProps = {
   emptyText?: string;
   className?: string;
   id?: string;
+  name?: string;
   disabled?: boolean;
+  "data-wt-name"?: string;
+  "aria-label"?: string;
 };
 
 export function Combobox({
@@ -44,7 +47,10 @@ export function Combobox({
   emptyText = "Nenhum resultado encontrado.",
   className,
   id,
+  name,
   disabled = false,
+  "data-wt-name": dataWtName,
+  "aria-label": ariaLabel,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -55,10 +61,13 @@ export function Combobox({
       <PopoverTrigger asChild>
         <Button
           id={id}
+          name={name}
           type="button"
           variant="outline"
           role="combobox"
           aria-expanded={open}
+          aria-label={ariaLabel ?? dataWtName}
+          data-wt-name={dataWtName}
           disabled={disabled}
           className={cn(
             "w-full justify-between font-normal",

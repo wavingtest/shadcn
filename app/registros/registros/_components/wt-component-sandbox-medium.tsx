@@ -3,6 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import { WtSection } from "@/components/wt-section";
 import {
   Accordion,
   AccordionContent,
@@ -33,29 +34,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
-
-function WtSection({
-  id,
-  title,
-  children,
-}: {
-  id: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section
-      id={`wt-${id}-section`}
-      data-wt-component={id}
-      className="rounded border-2 border-dashed border-violet-500 bg-violet-50/50 p-4"
-    >
-      <h3 className="mb-3 font-mono text-sm font-bold uppercase tracking-wide text-violet-950">
-        [WT] {title}
-      </h3>
-      {children}
-    </section>
-  );
-}
+import { wtControl, wtName, wtZone } from "@/lib/wt-test-attrs";
 
 export function WtComponentSandboxMedium() {
   const [switchOn, setSwitchOn] = React.useState(false);
@@ -64,41 +43,63 @@ export function WtComponentSandboxMedium() {
 
   return (
     <div
-      id="wt-sandbox-medium"
-      data-wt-zone="component-sandbox-medium"
+      {...wtZone("wt-sandbox-medium", "Sandbox WT — prioridade média")}
       className="space-y-4 rounded-lg border-4 border-violet-600 bg-white p-4"
     >
-      <WtSection id="switch" title="Switch">
+      <WtSection id="switch" title="Switch" variant="medium">
         <div className="flex items-center gap-3">
           <Switch
-            id="wt-switch-control"
+            {...wtControl("wt-switch-control", "Compartilha recursos", {
+              aria: true,
+            })}
             checked={switchOn}
             onCheckedChange={setSwitchOn}
           />
-          <Label htmlFor="wt-switch-control">
-            Compartilha recursos: {switchOn ? "ligado" : "desligado"}
+          <Label htmlFor="wt-switch-control" {...wtName("Compartilha recursos")}>
+            Compartilha recursos
+            <span className="sr-only">
+              {switchOn ? " (ligado)" : " (desligado)"}
+            </span>
           </Label>
+          <span aria-hidden className="text-sm text-muted-foreground">
+            {switchOn ? "ligado" : "desligado"}
+          </span>
         </div>
       </WtSection>
 
-      <WtSection id="radio-group" title="Radio Group">
+      <WtSection id="radio-group" title="Radio Group" variant="medium">
         <RadioGroup
-          id="wt-radio-group"
+          {...wtControl("wt-radio-group-root", "Radio Group")}
           value={radioValue}
           onValueChange={setRadioValue}
           className="gap-3"
         >
           <div className="flex items-center gap-2">
-            <RadioGroupItem value="opcao-a" id="wt-radio-a" />
-            <Label htmlFor="wt-radio-a">Opção A</Label>
+            <RadioGroupItem
+              {...wtControl("wt-radio-opcao-a", "Opção A")}
+              value="opcao-a"
+            />
+            <Label htmlFor="wt-radio-opcao-a" {...wtName("Opção A")}>
+              Opção A
+            </Label>
           </div>
           <div className="flex items-center gap-2">
-            <RadioGroupItem value="opcao-b" id="wt-radio-b" />
-            <Label htmlFor="wt-radio-b">Opção B</Label>
+            <RadioGroupItem
+              {...wtControl("wt-radio-opcao-b", "Opção B")}
+              value="opcao-b"
+            />
+            <Label htmlFor="wt-radio-opcao-b" {...wtName("Opção B")}>
+              Opção B
+            </Label>
           </div>
           <div className="flex items-center gap-2">
-            <RadioGroupItem value="opcao-c" id="wt-radio-c" />
-            <Label htmlFor="wt-radio-c">Opção C</Label>
+            <RadioGroupItem
+              {...wtControl("wt-radio-opcao-c", "Opção C")}
+              value="opcao-c"
+            />
+            <Label htmlFor="wt-radio-opcao-c" {...wtName("Opção C")}>
+              Opção C
+            </Label>
           </div>
         </RadioGroup>
         <p className="mt-2 font-mono text-xs text-muted-foreground">
@@ -106,8 +107,11 @@ export function WtComponentSandboxMedium() {
         </p>
       </WtSection>
 
-      <WtSection id="scroll-area" title="Scroll Area">
-        <ScrollArea id="wt-scroll-area" className="h-32 w-full max-w-md rounded-md border">
+      <WtSection id="scroll-area" title="Scroll Area" variant="medium">
+        <ScrollArea
+          {...wtControl("wt-scroll-area-viewport", "Scroll Area")}
+          className="h-32 w-full max-w-md rounded-md border"
+        >
           <div className="space-y-2 p-4 text-sm">
             {Array.from({ length: 12 }, (_, i) => (
               <p key={i}>Linha {i + 1} — conteúdo rolável do Scroll Area.</p>
@@ -116,11 +120,11 @@ export function WtComponentSandboxMedium() {
         </ScrollArea>
       </WtSection>
 
-      <WtSection id="collapsible" title="Collapsible">
+      <WtSection id="collapsible" title="Collapsible" variant="medium">
         <Collapsible open={collapsibleOpen} onOpenChange={setCollapsibleOpen}>
           <CollapsibleTrigger asChild>
             <Button
-              id="wt-collapsible-trigger"
+              {...wtControl("wt-collapsible-trigger", "Filtros avançados (Collapsible)")}
               type="button"
               variant="outline"
               className="gap-2"
@@ -132,7 +136,7 @@ export function WtComponentSandboxMedium() {
             </Button>
           </CollapsibleTrigger>
           <CollapsibleContent
-            id="wt-collapsible-content"
+            {...wtControl("wt-collapsible-content", "Filtros avançados — conteúdo")}
             className="mt-3 rounded-md border bg-muted/30 p-3 text-sm"
           >
             Conteúdo recolhível: período, status e tags de teste.
@@ -140,32 +144,39 @@ export function WtComponentSandboxMedium() {
         </Collapsible>
       </WtSection>
 
-      <WtSection id="accordion" title="Accordion">
-        <Accordion type="single" collapsible id="wt-accordion" className="max-w-md">
+      <WtSection id="accordion" title="Accordion" variant="medium">
+        <Accordion
+          type="single"
+          collapsible
+          {...wtControl("wt-accordion-root", "Accordion")}
+          className="max-w-md"
+        >
           <AccordionItem value="item-1">
-            <AccordionTrigger id="wt-accordion-trigger-1">
+            <AccordionTrigger {...wtControl("wt-accordion-trigger-1", "Pergunta 1 (Accordion)")}>
               Pergunta 1 (Accordion)
             </AccordionTrigger>
-            <AccordionContent id="wt-accordion-content-1">
+            <AccordionContent {...wtControl("wt-accordion-content-1", "Resposta 1 (Accordion)")}>
               Resposta da primeira seção do accordion.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
-            <AccordionTrigger id="wt-accordion-trigger-2">
+            <AccordionTrigger {...wtControl("wt-accordion-trigger-2", "Pergunta 2 (Accordion)")}>
               Pergunta 2 (Accordion)
             </AccordionTrigger>
-            <AccordionContent id="wt-accordion-content-2">
+            <AccordionContent {...wtControl("wt-accordion-content-2", "Resposta 2 (Accordion)")}>
               Resposta da segunda seção do accordion.
             </AccordionContent>
           </AccordionItem>
         </Accordion>
       </WtSection>
 
-      <WtSection id="avatar" title="Avatar">
+      <WtSection id="avatar" title="Avatar" variant="medium">
         <div className="flex items-center gap-4">
-          <Avatar id="wt-avatar">
+          <Avatar {...wtControl("wt-avatar-root", "Avatar WT Test User")}>
             <AvatarImage src="" alt="WT Test User" />
-            <AvatarFallback id="wt-avatar-fallback">WT</AvatarFallback>
+            <AvatarFallback {...wtControl("wt-avatar-fallback", "Avatar fallback WT")}>
+              WT
+            </AvatarFallback>
           </Avatar>
           <p className="text-sm text-muted-foreground">
             Avatar com fallback &quot;WT&quot; quando não há imagem.
@@ -173,29 +184,31 @@ export function WtComponentSandboxMedium() {
         </div>
       </WtSection>
 
-      <WtSection id="breadcrumb" title="Breadcrumb">
-        <Breadcrumb id="wt-breadcrumb">
+      <WtSection id="breadcrumb" title="Breadcrumb" variant="medium">
+        <Breadcrumb {...wtControl("wt-breadcrumb-root", "Breadcrumb")}>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/" id="wt-breadcrumb-inicio">
+                <Link {...wtControl("wt-breadcrumb-inicio", "Início")} href="/">
                   Início
                 </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage id="wt-breadcrumb-registros">Registros</BreadcrumbPage>
+              <BreadcrumbPage {...wtControl("wt-breadcrumb-registros", "Registros")}>
+                Registros
+              </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </WtSection>
 
-      <WtSection id="hover-card" title="Hover Card">
+      <WtSection id="hover-card" title="Hover Card" variant="medium">
         <HoverCard openDelay={200}>
           <HoverCardTrigger asChild>
             <Button
-              id="wt-hover-card-trigger"
+              {...wtControl("wt-hover-card-trigger", "Passe o mouse aqui (Hover Card)")}
               type="button"
               variant="link"
               className="h-auto p-0"
@@ -203,7 +216,10 @@ export function WtComponentSandboxMedium() {
               Passe o mouse aqui (Hover Card)
             </Button>
           </HoverCardTrigger>
-          <HoverCardContent id="wt-hover-card-content" className="w-80">
+          <HoverCardContent
+            {...wtControl("wt-hover-card-content", "Hover Card — preview")}
+            className="w-80"
+          >
             <p className="text-sm font-medium">Registro Alfa</p>
             <p className="mt-1 text-sm text-muted-foreground">
               Preview rápido: Cliente A · Situação Ativo · Responsável A.

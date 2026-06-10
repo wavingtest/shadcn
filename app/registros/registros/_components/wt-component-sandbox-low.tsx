@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { Bold, Italic, Underline } from "lucide-react";
+import { WtSection } from "@/components/wt-section";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
   Carousel,
@@ -31,6 +32,7 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { wtControl, wtName, wtZone } from "@/lib/wt-test-attrs";
 
 const chartData = [
   { mes: "Jan", registros: 4 },
@@ -52,29 +54,6 @@ const carouselSlides = [
   "Slide 3 — Carousel",
 ];
 
-function WtSection({
-  id,
-  title,
-  children,
-}: {
-  id: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section
-      id={`wt-${id}-section`}
-      data-wt-component={id}
-      className="rounded border-2 border-dashed border-sky-500 bg-sky-50/50 p-4"
-    >
-      <h3 className="mb-3 font-mono text-sm font-bold uppercase tracking-wide text-sky-950">
-        [WT] {title}
-      </h3>
-      {children}
-    </section>
-  );
-}
-
 export function WtComponentSandboxLow() {
   const [sliderValue, setSliderValue] = React.useState([50]);
   const [otp, setOtp] = React.useState("");
@@ -82,14 +61,16 @@ export function WtComponentSandboxLow() {
 
   return (
     <div
-      id="wt-sandbox-low"
-      data-wt-zone="component-sandbox-low"
+      {...wtZone("wt-sandbox-low", "Sandbox WT — prioridade baixa")}
       className="space-y-4 rounded-lg border-4 border-sky-600 bg-white p-4"
     >
-      <WtSection id="slider" title="Slider">
+      <WtSection id="slider" title="Slider" variant="low">
         <div className="max-w-md space-y-3">
+          <Label htmlFor="wt-slider-control" {...wtName("Slider de valor")}>
+            Slider de valor
+          </Label>
           <Slider
-            id="wt-slider"
+            {...wtControl("wt-slider-control", "Slider de valor", { aria: true })}
             value={sliderValue}
             onValueChange={setSliderValue}
             max={100}
@@ -101,10 +82,9 @@ export function WtComponentSandboxLow() {
         </div>
       </WtSection>
 
-      <WtSection id="toggle" title="Toggle">
+      <WtSection id="toggle" title="Toggle" variant="low">
         <Toggle
-          id="wt-toggle"
-          aria-label="Toggle negrito"
+          {...wtControl("wt-toggle-negrito", "Toggle negrito", { aria: true })}
           pressed={toggleFormat === "bold"}
           onPressedChange={(pressed) =>
             setToggleFormat(pressed ? "bold" : "")
@@ -114,27 +94,28 @@ export function WtComponentSandboxLow() {
         </Toggle>
       </WtSection>
 
-      <WtSection id="toggle-group" title="Toggle Group">
+      <WtSection id="toggle-group" title="Toggle Group" variant="low">
         <ToggleGroup
-          id="wt-toggle-group"
+          {...wtControl("wt-toggle-group-root", "Toggle Group")}
           type="single"
           value={toggleFormat}
           onValueChange={(v) => setToggleFormat(v)}
         >
-          <ToggleGroupItem value="bold" id="wt-toggle-group-bold" aria-label="Negrito">
+          <ToggleGroupItem
+            {...wtControl("wt-toggle-group-negrito", "Negrito", { aria: true })}
+            value="bold"
+          >
             <Bold className="h-4 w-4" />
           </ToggleGroupItem>
           <ToggleGroupItem
+            {...wtControl("wt-toggle-group-italico", "Itálico", { aria: true })}
             value="italic"
-            id="wt-toggle-group-italic"
-            aria-label="Itálico"
           >
             <Italic className="h-4 w-4" />
           </ToggleGroupItem>
           <ToggleGroupItem
+            {...wtControl("wt-toggle-group-sublinhado", "Sublinhado", { aria: true })}
             value="underline"
-            id="wt-toggle-group-underline"
-            aria-label="Sublinhado"
           >
             <Underline className="h-4 w-4" />
           </ToggleGroupItem>
@@ -144,11 +125,15 @@ export function WtComponentSandboxLow() {
         </p>
       </WtSection>
 
-      <WtSection id="input-otp" title="Input OTP">
+      <WtSection id="input-otp" title="Input OTP" variant="low">
         <div className="space-y-2">
-          <Label htmlFor="wt-input-otp">Código de 6 dígitos</Label>
+          <Label htmlFor="wt-input-otp-control" {...wtName("Código de 6 dígitos")}>
+            Código de 6 dígitos
+          </Label>
           <InputOTP
-            id="wt-input-otp"
+            {...wtControl("wt-input-otp-control", "Código de 6 dígitos", {
+              nameAttr: "codigo_otp",
+            })}
             maxLength={6}
             value={otp}
             onChange={setOtp}
@@ -168,9 +153,9 @@ export function WtComponentSandboxLow() {
         </div>
       </WtSection>
 
-      <WtSection id="aspect-ratio" title="Aspect Ratio">
+      <WtSection id="aspect-ratio" title="Aspect Ratio" variant="low">
         <div className="w-full max-w-md">
-          <AspectRatio ratio={16 / 9} id="wt-aspect-ratio">
+          <AspectRatio ratio={16 / 9} {...wtControl("wt-aspect-ratio-box", "Aspect Ratio 16:9")}>
             <div className="flex h-full w-full items-center justify-center rounded-md bg-primary/20 text-sm font-medium">
               Área 16:9 (Aspect Ratio)
             </div>
@@ -178,13 +163,13 @@ export function WtComponentSandboxLow() {
         </div>
       </WtSection>
 
-      <WtSection id="carousel" title="Carousel">
-        <Carousel id="wt-carousel" className="mx-auto w-full max-w-md">
+      <WtSection id="carousel" title="Carousel" variant="low">
+        <Carousel {...wtControl("wt-carousel-root", "Carousel")} className="mx-auto w-full max-w-md">
           <CarouselContent>
             {carouselSlides.map((slide, index) => (
               <CarouselItem key={slide}>
                 <div
-                  id={`wt-carousel-slide-${index + 1}`}
+                  {...wtControl(`wt-carousel-slide-${index + 1}`, slide)}
                   className="flex h-32 items-center justify-center rounded-md border bg-muted/40 text-sm font-medium"
                 >
                   {slide}
@@ -192,14 +177,14 @@ export function WtComponentSandboxLow() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious id="wt-carousel-prev" />
-          <CarouselNext id="wt-carousel-next" />
+          <CarouselPrevious {...wtControl("wt-carousel-anterior", "Carousel — anterior")} />
+          <CarouselNext {...wtControl("wt-carousel-proximo", "Carousel — próximo")} />
         </Carousel>
       </WtSection>
 
-      <WtSection id="chart" title="Chart">
+      <WtSection id="chart" title="Chart" variant="low">
         <ChartContainer
-          id="wt-chart"
+          {...wtControl("wt-chart-container", "Chart — registros por mês")}
           config={chartConfig}
           className="h-[220px] w-full max-w-md"
         >
@@ -221,24 +206,27 @@ export function WtComponentSandboxLow() {
         </ChartContainer>
       </WtSection>
 
-      <WtSection id="resizable" title="Resizable">
+      <WtSection id="resizable" title="Resizable" variant="low">
         <ResizablePanelGroup
-          id="wt-resizable"
+          {...wtControl("wt-resizable-root", "Resizable — painéis")}
           direction="horizontal"
           className="min-h-[120px] max-w-lg rounded-lg border"
         >
           <ResizablePanel defaultSize={50} minSize={25}>
             <div
-              id="wt-resizable-panel-a"
+              {...wtControl("wt-resizable-painel-a", "Painel A")}
               className="flex h-full items-center justify-center p-4 text-sm"
             >
               Painel A
             </div>
           </ResizablePanel>
-          <ResizableHandle withHandle />
+          <ResizableHandle
+            {...wtControl("wt-resizable-handle", "Resizable — divisor")}
+            withHandle
+          />
           <ResizablePanel defaultSize={50} minSize={25}>
             <div
-              id="wt-resizable-panel-b"
+              {...wtControl("wt-resizable-painel-b", "Painel B (arraste o divisor)")}
               className="flex h-full items-center justify-center p-4 text-sm"
             >
               Painel B (arraste o divisor)

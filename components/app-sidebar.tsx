@@ -16,6 +16,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { wtControl, wtZone } from "@/lib/wt-test-attrs";
 
 type SubItem = { label: string; icon: LucideIcon };
 type MenuItem = {
@@ -56,6 +57,22 @@ const menu: MenuItem[] = [
   },
 ];
 
+const sidebarControlId: Record<string, string> = {
+  "Módulos e Registros": "wt-sidebar-modulos-registros",
+  Cadastros: "wt-sidebar-cadastros",
+  Equipe: "wt-sidebar-equipe",
+  Configurações: "wt-sidebar-configuracoes",
+  Registros: "wt-sidebar-registros",
+  Pessoas: "wt-sidebar-pessoas",
+  Pacotes: "wt-sidebar-pacotes",
+  Ferramentas: "wt-sidebar-ferramentas",
+};
+
+function sidebarControl(label: string) {
+  const id = sidebarControlId[label] ?? `wt-sidebar-${label.toLowerCase().replace(/\s+/g, "-")}`;
+  return wtControl(id, label);
+}
+
 export function AppSidebar({ collapsed = false }: { collapsed?: boolean }) {
   const pathname = usePathname();
   const [open, setOpen] = React.useState<Record<string, boolean>>({
@@ -67,6 +84,7 @@ export function AppSidebar({ collapsed = false }: { collapsed?: boolean }) {
 
   return (
     <aside
+      {...wtZone("wt-sidebar", "Menu lateral")}
       className={cn(
         "flex h-screen shrink-0 flex-col border-r bg-white transition-[width] duration-200 ease-linear",
         collapsed ? "w-16" : "w-64"
@@ -104,6 +122,7 @@ export function AppSidebar({ collapsed = false }: { collapsed?: boolean }) {
                   {isInicioItem ? (
                     <Link
                       href="/"
+                      {...wtControl("wt-sidebar-inicio", "Início")}
                       className={cn(
                         "flex w-full items-center rounded-md py-2 text-sm transition-colors",
                         collapsed ? "justify-center px-2" : "gap-3 px-3",
@@ -121,6 +140,7 @@ export function AppSidebar({ collapsed = false }: { collapsed?: boolean }) {
                   ) : (
                     <button
                       type="button"
+                      {...sidebarControl(item.label)}
                       className={cn(
                         "flex w-full items-center rounded-md py-2 text-sm text-foreground hover:bg-accent",
                         collapsed ? "justify-center px-2" : "gap-3 px-3"
@@ -144,6 +164,7 @@ export function AppSidebar({ collapsed = false }: { collapsed?: boolean }) {
                 <button
                   type="button"
                   onClick={() => toggle(item.label)}
+                  {...sidebarControl(item.label)}
                   className={cn(
                     "flex w-full items-center rounded-md py-2 text-sm transition-colors",
                     collapsed ? "justify-center px-2" : "justify-between gap-3 px-3",
@@ -187,6 +208,7 @@ export function AppSidebar({ collapsed = false }: { collapsed?: boolean }) {
                           {isDemandasItem ? (
                             <Link
                               href="/registros/registros"
+                              {...sidebarControl(sub.label)}
                               className={cn(
                                 "flex h-9 w-full items-center gap-2.5 rounded-md px-3 text-sm transition-colors",
                                 isSubActive
@@ -200,6 +222,7 @@ export function AppSidebar({ collapsed = false }: { collapsed?: boolean }) {
                           ) : (
                             <button
                               type="button"
+                              {...sidebarControl(sub.label)}
                               className={cn(
                                 "flex h-9 w-full items-center gap-2.5 rounded-md px-3 text-sm transition-colors",
                                 isSubActive

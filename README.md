@@ -90,6 +90,32 @@ Bloco azul-claro abaixo do sandbox de prioridade média (`wt-component-sandbox-l
 
 > **Nota:** novos componentes shadcn podem ser adicionados com `npx shadcn@latest add <nome>`; esta tabela reflete o que está versionado no projeto.
 
+## Convenção WT / Gherkin
+
+Atributos estáveis para automação com o **WavingTest (WT)** e steps em **Gherkin** (texto legível do usuário).
+
+| Atributo | Uso |
+|----------|-----|
+| `id` | Identificador único no DOM. Padrão: `wt-{componente}-{ação}` (sections: `wt-{componente}-section`). |
+| `data-wt-name` | Nome exibido no picker do WT / referência em steps Gherkin. |
+| `name` | Campos de formulário (HTML `name`). |
+| `data-wt-component` | Tipo do bloco no sandbox (ex.: `switch`, `dialog`). |
+| `data-wt-zone` | Agrupador de área (ex.: filtros, sandbox alta prioridade). |
+| `aria-label` | Controles só com ícone ou sem texto visível estável. |
+
+Helpers em `lib/wt-test-attrs.ts`:
+
+- `wtName(name)` — só `data-wt-name`
+- `wtControl(id, name, options?)` — `id` + `data-wt-name` + opcional `name` / `aria-label`
+- `wtSection(component, title)` — section do sandbox (`WtSection`)
+- `wtZone(id, name)` — container agrupador
+
+**Regras:**
+
+1. Gherkin usa **label**, texto do botão ou `aria-label` — não depende só de `id`.
+2. Evite `id` duplicado entre section e controle (ex.: Switch usa `wt-switch-section` vs `wt-switch-control`).
+3. Labels visíveis permanecem estáveis; estados dinâmicos vão em texto auxiliar (`sr-only` ou resumo separado).
+
 ## Páginas
 
 - `/` — **Início**: explica o objetivo do ambiente e linka para a página de teste.

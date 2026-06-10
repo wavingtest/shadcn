@@ -14,7 +14,10 @@ type DatePickerProps = {
   onChange: (date: Date | undefined) => void;
   placeholder?: string;
   id?: string;
+  name?: string;
   className?: string;
+  "data-wt-name"?: string;
+  "aria-label"?: string;
 };
 
 export function DatePicker({
@@ -22,15 +25,21 @@ export function DatePicker({
   onChange,
   placeholder = "Selecione uma data",
   id,
+  name,
   className,
+  "data-wt-name": dataWtName,
+  "aria-label": ariaLabel,
 }: DatePickerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           id={id}
+          name={name}
           type="button"
           variant="outline"
+          aria-label={ariaLabel ?? dataWtName ?? placeholder}
+          data-wt-name={dataWtName}
           className={cn(
             "w-full justify-start text-left font-normal",
             !value && "text-muted-foreground",

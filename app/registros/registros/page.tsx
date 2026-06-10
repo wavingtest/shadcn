@@ -42,6 +42,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { SEED_REGISTROS } from "@/lib/mock-registros";
+import { wtControl, wtName, wtZone } from "@/lib/wt-test-attrs";
 import { RegistroDrawer } from "./_components/registro-drawer";
 import { WtComponentSandbox } from "./_components/wt-component-sandbox";
 import { WtComponentSandboxMedium } from "./_components/wt-component-sandbox-medium";
@@ -248,7 +249,10 @@ export default function DemandasPage() {
   return (
     <>
       <AppHeader title="Registros" />
-      <main className="flex-1 space-y-4 p-6">
+      <main
+        {...wtZone("wt-pagina-registros", "Página de Registros")}
+        className="flex-1 space-y-4 p-6"
+      >
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight">Registros</h2>
@@ -256,21 +260,30 @@ export default function DemandasPage() {
               Gerencie os registros de teste do ambiente
             </p>
           </div>
-          <Button onClick={() => setOpen(true)}>
+          <Button
+            {...wtControl("wt-novo-registro", "Novo Registro")}
+            onClick={() => setOpen(true)}
+          >
             <Plus className="mr-2 h-4 w-4" />
             Novo Registro
           </Button>
         </div>
 
-        <Card>
+        <Card {...wtZone("wt-filtros-registros", "Filtros de registros")}>
           <CardContent className={`grid gap-4 p-4 ${filtrosGridCols}`}>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="select-searchType">Busca por</Label>
+              <Label htmlFor="wt-filtro-tipo-busca" {...wtName("Busca por")}>
+                Busca por
+              </Label>
               <Select
                 value={searchType}
                 onValueChange={(value) => setSearchType(value as SearchType)}
               >
-                <SelectTrigger id="select-searchType">
+                <SelectTrigger
+                  {...wtControl("wt-filtro-tipo-busca", "Busca por", {
+                    nameAttr: "searchType",
+                  })}
+                >
                   <SelectValue placeholder="Selecione..." />
                 </SelectTrigger>
                 <SelectContent>
@@ -283,10 +296,13 @@ export default function DemandasPage() {
               </Select>
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="input-searchContent">Conteúdo</Label>
+              <Label htmlFor="wt-filtro-conteudo" {...wtName("Conteúdo")}>
+                Conteúdo
+              </Label>
               <Input
-                id="input-searchContent"
-                name="searchContent"
+                {...wtControl("wt-filtro-conteudo", "Conteúdo", {
+                  nameAttr: "searchContent",
+                })}
                 placeholder="Digite o termo de busca..."
                 maxLength={200}
                 value={searchContentInput}
@@ -294,23 +310,31 @@ export default function DemandasPage() {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="input-searchDate">Data de criação</Label>
+              <Label htmlFor="wt-filtro-data" {...wtName("Data de criação")}>
+                Data de criação
+              </Label>
               <DatePicker
-                id="input-searchDate"
+                {...wtControl("wt-filtro-data", "Data de criação", {
+                  nameAttr: "searchDate",
+                })}
                 value={searchDateInput}
                 onChange={setSearchDateInput}
                 placeholder="Selecione uma data"
               />
             </div>
             <div className="flex items-end gap-2">
-              <Button type="button" aria-label="Aplicar filtros" onClick={handleBuscar}>
+              <Button
+                type="button"
+                {...wtControl("wt-filtro-buscar", "Buscar")}
+                onClick={handleBuscar}
+              >
                 <Search className="mr-2 h-4 w-4" />
                 Buscar
               </Button>
               <Button
                 type="button"
                 variant="outline"
-                aria-label="Limpar filtros"
+                {...wtControl("wt-filtro-limpar", "Limpar")}
                 onClick={handleLimpar}
               >
                 <X className="mr-2 h-4 w-4" />
@@ -323,7 +347,7 @@ export default function DemandasPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card {...wtZone("wt-lista-registros", "Lista de registros")}>
           <CardHeader className="flex-row items-center justify-between space-y-0">
             <CardTitle>Lista de Registros</CardTitle>
             <div className="flex items-center gap-2">
@@ -334,7 +358,12 @@ export default function DemandasPage() {
                   setPage(1);
                 }}
               >
-                <SelectTrigger id="select-orderBy" className="w-[200px]">
+                <SelectTrigger
+                  {...wtControl("wt-ordenacao-campo", "Ordenar por", {
+                    nameAttr: "orderBy",
+                  })}
+                  className="w-[200px]"
+                >
                   <SelectValue placeholder="Sem ordenação" />
                 </SelectTrigger>
                 <SelectContent>
@@ -347,7 +376,9 @@ export default function DemandasPage() {
               </Select>
               <Button
                 variant="outline"
-                aria-label={`Alternar direção da ordenação. Atual: ${sortAsc ? "crescente" : "decrescente"}`}
+                {...wtControl("wt-ordenacao-direcao", "Alternar direção da ordenação", {
+                  aria: true,
+                })}
                 title={sortAsc ? "Ordenação crescente" : "Ordenação decrescente"}
                 className="h-9"
                 onClick={() => {
@@ -361,7 +392,7 @@ export default function DemandasPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <Table>
+            <Table {...wtControl("wt-tabela-registros", "Tabela de registros")}>
               <TableHeader>
                 <TableRow>
                   <TableHead>Registro</TableHead>
@@ -414,7 +445,11 @@ export default function DemandasPage() {
                                 type="button"
                                 variant="ghost"
                                 size="icon"
-                                aria-label="Visualizar (sandbox)"
+                                {...wtControl(
+                                  "wt-tabela-visualizar",
+                                  "Visualizar (sandbox)",
+                                  { aria: true }
+                                )}
                               >
                                 <Eye className="h-4 w-4" />
                               </Button>
@@ -427,7 +462,11 @@ export default function DemandasPage() {
                                 type="button"
                                 variant="ghost"
                                 size="icon"
-                                aria-label="Editar (sandbox)"
+                                {...wtControl(
+                                  "wt-tabela-editar",
+                                  "Editar (sandbox)",
+                                  { aria: true }
+                                )}
                               >
                                 <Pencil className="h-4 w-4" />
                               </Button>
@@ -460,12 +499,18 @@ export default function DemandasPage() {
                     {displayedDemandas.length}
                   </span>
                 </p>
-                <Pagination className="sm:justify-end">
+                <Pagination
+                  {...wtControl("wt-paginacao-registros", "Paginação de registros")}
+                  className="sm:justify-end"
+                >
                   <PaginationContent>
                     <PaginationItem>
                       <PaginationPrevious
                         disabled={effectivePage <= 1}
                         onClick={() => setPage(Math.max(1, effectivePage - 1))}
+                        {...wtControl("wt-paginacao-anterior", "Paginação — anterior", {
+                          aria: true,
+                        })}
                       />
                     </PaginationItem>
                     <PaginationItem>
@@ -479,6 +524,9 @@ export default function DemandasPage() {
                         onClick={() =>
                           setPage(Math.min(totalPages, effectivePage + 1))
                         }
+                        {...wtControl("wt-paginacao-proximo", "Paginação — próximo", {
+                          aria: true,
+                        })}
                       />
                     </PaginationItem>
                   </PaginationContent>

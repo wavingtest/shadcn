@@ -22,6 +22,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { wtControl, wtName, wtZone } from "@/lib/wt-test-attrs";
 
 const clientes = [
   { value: "Cliente A", label: "Cliente A" },
@@ -123,21 +124,27 @@ export function RegistroDrawer({
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetContent className="w-full sm:max-w-xl">
+      <SheetContent
+        {...wtZone("wt-drawer-registro", "Drawer — Novo Registro")}
+        className="w-full sm:max-w-xl"
+      >
         <SheetHeader>
-          <SheetTitle>Novo Registro</SheetTitle>
+          <SheetTitle {...wtName("Novo Registro")}>Novo Registro</SheetTitle>
           <SheetDescription>
             Preencha os dados para criar um novo registro de teste
           </SheetDescription>
         </SheetHeader>
 
         <form
+          {...wtControl("wt-drawer-form", "Formulário de novo registro", {
+            nameAttr: "registro_novo",
+          })}
           className="flex-1 space-y-5 overflow-y-auto px-6 py-5"
           onSubmit={handleSubmit}
         >
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="select-cliente">
+              <Label htmlFor="wt-drawer-cliente" {...wtName("Cliente")}>
                 Cliente
                 <Required />
               </Label>
@@ -147,7 +154,12 @@ export function RegistroDrawer({
                   setFormState((prev) => ({ ...prev, cliente: value }))
                 }
               >
-                <SelectTrigger id="select-cliente" aria-required>
+                <SelectTrigger
+                  {...wtControl("wt-drawer-cliente", "Cliente", {
+                    nameAttr: "cliente",
+                  })}
+                  aria-required
+                >
                   <SelectValue placeholder="Selecione um cliente" />
                 </SelectTrigger>
                 <SelectContent>
@@ -161,7 +173,7 @@ export function RegistroDrawer({
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="select-contrato">
+              <Label htmlFor="wt-drawer-categoria" {...wtName("Categoria")}>
                 Categoria
                 <Required />
               </Label>
@@ -171,7 +183,12 @@ export function RegistroDrawer({
                   setFormState((prev) => ({ ...prev, contrato: value }))
                 }
               >
-                <SelectTrigger id="select-contrato" aria-required>
+                <SelectTrigger
+                  {...wtControl("wt-drawer-categoria", "Categoria", {
+                    nameAttr: "contrato",
+                  })}
+                  aria-required
+                >
                   <SelectValue placeholder="Selecione uma categoria" />
                 </SelectTrigger>
                 <SelectContent>
@@ -186,13 +203,14 @@ export function RegistroDrawer({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="input-descricao">
+            <Label htmlFor="wt-drawer-titulo" {...wtName("Título do Registro")}>
               Título do Registro
               <Required />
             </Label>
             <Input
-              id="input-descricao"
-              name="descricao"
+              {...wtControl("wt-drawer-titulo", "Título do Registro", {
+                nameAttr: "descricao",
+              })}
               maxLength={225}
               placeholder="Ex: Registro de Teste 01"
               aria-required
@@ -208,13 +226,14 @@ export function RegistroDrawer({
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="input-sigla">
+              <Label htmlFor="wt-drawer-codigo" {...wtName("Código do Registro")}>
                 Código do Registro
                 <Required />
               </Label>
               <Input
-                id="input-sigla"
-                name="sigla"
+                {...wtControl("wt-drawer-codigo", "Código do Registro", {
+                  nameAttr: "sigla",
+                })}
                 maxLength={25}
                 placeholder="Ex: REG01"
                 aria-required
@@ -229,13 +248,14 @@ export function RegistroDrawer({
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="input-preposto">
+              <Label htmlFor="wt-drawer-contato" {...wtName("Contato")}>
                 Contato
                 <Required />
               </Label>
               <Input
-                id="input-preposto"
-                name="preposto"
+                {...wtControl("wt-drawer-contato", "Contato", {
+                  nameAttr: "preposto",
+                })}
                 maxLength={225}
                 placeholder=""
                 value={formState.preposto}
@@ -249,7 +269,7 @@ export function RegistroDrawer({
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="select-gerente">
+              <Label htmlFor="wt-drawer-responsavel" {...wtName("Responsável")}>
                 Responsável
                 <Required />
               </Label>
@@ -259,7 +279,12 @@ export function RegistroDrawer({
                   setFormState((prev) => ({ ...prev, gerente: value }))
                 }
               >
-                <SelectTrigger id="select-gerente" aria-required>
+                <SelectTrigger
+                  {...wtControl("wt-drawer-responsavel", "Responsável", {
+                    nameAttr: "gerente",
+                  })}
+                  aria-required
+                >
                   <SelectValue placeholder="Selecione um responsável" />
                 </SelectTrigger>
                 <SelectContent>
@@ -274,7 +299,7 @@ export function RegistroDrawer({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="select-tipoServico">
+            <Label htmlFor="wt-drawer-tipo-registro" {...wtName("Tipo de Registro")}>
               Tipo de Registro
               <Required />
             </Label>
@@ -284,7 +309,12 @@ export function RegistroDrawer({
                 setFormState((prev) => ({ ...prev, tipoServico: value }))
               }
             >
-              <SelectTrigger id="select-tipoServico" aria-required>
+              <SelectTrigger
+                {...wtControl("wt-drawer-tipo-registro", "Tipo de Registro", {
+                  nameAttr: "tipoServico",
+                })}
+                aria-required
+              >
                 <SelectValue placeholder="Selecione um tipo" />
               </SelectTrigger>
               <SelectContent>
@@ -298,7 +328,7 @@ export function RegistroDrawer({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="select-metodologia">
+            <Label htmlFor="wt-drawer-metodologia" {...wtName("Metodologia")}>
               Metodologia
               <Required />
             </Label>
@@ -308,7 +338,12 @@ export function RegistroDrawer({
                 setFormState((prev) => ({ ...prev, metodologia: value }))
               }
             >
-              <SelectTrigger id="select-metodologia" aria-required>
+              <SelectTrigger
+                {...wtControl("wt-drawer-metodologia", "Metodologia", {
+                  nameAttr: "metodologia",
+                })}
+                aria-required
+              >
                 <SelectValue placeholder="Selecione uma metodologia" />
               </SelectTrigger>
               <SelectContent>
@@ -323,7 +358,9 @@ export function RegistroDrawer({
 
           <div className="flex items-start gap-3 rounded-md border border-input bg-muted/40 px-4 py-3">
             <Checkbox
-              id="checkbox-compartilha"
+              {...wtControl("wt-drawer-compartilha", "Compartilha recursos", {
+                nameAttr: "compartilhaProfissionais",
+              })}
               checked={formState.compartilhaProfissionais}
               onCheckedChange={(value) =>
                 setFormState((prev) => ({
@@ -334,8 +371,9 @@ export function RegistroDrawer({
             />
             <div className="grid gap-1">
               <Label
-                htmlFor="checkbox-compartilha"
+                htmlFor="wt-drawer-compartilha"
                 className="cursor-pointer text-sm font-medium leading-none"
+                {...wtName("Compartilha recursos")}
               >
                 Compartilha recursos
               </Label>
@@ -347,11 +385,20 @@ export function RegistroDrawer({
 
           <SheetFooter className="px-0 pb-0">
             <SheetClose asChild>
-              <Button type="button" variant="outline">
+              <Button
+                type="button"
+                variant="outline"
+                {...wtControl("wt-drawer-cancelar", "Cancelar")}
+              >
                 Cancelar
               </Button>
             </SheetClose>
-            <Button type="submit" disabled={!isValid} aria-disabled={!isValid}>
+            <Button
+              type="submit"
+              disabled={!isValid}
+              aria-disabled={!isValid}
+              {...wtControl("wt-drawer-salvar", "Salvar Registro")}
+            >
               Salvar Registro
             </Button>
           </SheetFooter>

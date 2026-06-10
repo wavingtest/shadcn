@@ -6,6 +6,7 @@ import { Info } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { WtSection } from "@/components/wt-section";
 import {
   Alert,
   AlertDescription,
@@ -41,6 +42,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
@@ -50,6 +52,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { wtControl, wtName, wtZone } from "@/lib/wt-test-attrs";
 
 const comboboxOptions = [
   { value: "cliente-a", label: "Cliente A" },
@@ -63,29 +66,6 @@ const formSchema = z.object({
 });
 
 type FormValues = z.infer<typeof formSchema>;
-
-function WtSection({
-  id,
-  title,
-  children,
-}: {
-  id: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section
-      id={`wt-${id}-section`}
-      data-wt-component={id}
-      className="rounded border-2 border-dashed border-amber-500 bg-amber-50/60 p-4"
-    >
-      <h3 className="mb-3 font-mono text-sm font-bold uppercase tracking-wide text-amber-950">
-        [WT] {title}
-      </h3>
-      {children}
-    </section>
-  );
-}
 
 const skeletonPreviewContent = {
   titulo: "Registro Alfa — integração QA",
@@ -122,19 +102,22 @@ export function WtComponentSandbox() {
 
   return (
     <div
-      id="wt-sandbox"
-      data-wt-zone="component-sandbox"
+      {...wtZone("wt-sandbox", "Sandbox WT — prioridade alta")}
       className="space-y-4 rounded-lg border-4 border-amber-600 bg-white p-4"
     >
-      <WtSection id="alert" title="Alert">
-        <Alert id="wt-alert-default">
+      <WtSection id="alert" title="Alert" variant="high">
+        <Alert {...wtControl("wt-alert-default", "Alert (default)")}>
           <Info className="h-4 w-4" />
           <AlertTitle>Alert (default)</AlertTitle>
           <AlertDescription>
             Mensagem inline de exemplo para validação do componente Alert.
           </AlertDescription>
         </Alert>
-        <Alert variant="destructive" id="wt-alert-destructive" className="mt-3">
+        <Alert
+          variant="destructive"
+          {...wtControl("wt-alert-destructive", "Alert (destructive)")}
+          className="mt-3"
+        >
           <AlertTitle>Alert (destructive)</AlertTitle>
           <AlertDescription>
             Variante destrutiva para cenários de erro.
@@ -142,14 +125,18 @@ export function WtComponentSandbox() {
         </Alert>
       </WtSection>
 
-      <WtSection id="dialog" title="Dialog">
+      <WtSection id="dialog" title="Dialog" variant="high">
         <Dialog>
           <DialogTrigger asChild>
-            <Button id="wt-dialog-trigger" type="button" variant="outline">
+            <Button
+              {...wtControl("wt-dialog-trigger", "Abrir Dialog")}
+              type="button"
+              variant="outline"
+            >
               Abrir Dialog
             </Button>
           </DialogTrigger>
-          <DialogContent id="wt-dialog-content">
+          <DialogContent {...wtControl("wt-dialog-content", "Dialog — conteúdo")}>
             <DialogHeader>
               <DialogTitle>Dialog — título de teste</DialogTitle>
               <DialogDescription>
@@ -157,7 +144,11 @@ export function WtComponentSandbox() {
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
-              <Button type="button" variant="outline">
+              <Button
+                {...wtControl("wt-dialog-fechar", "Fechar Dialog")}
+                type="button"
+                variant="outline"
+              >
                 Fechar
               </Button>
             </DialogFooter>
@@ -165,14 +156,20 @@ export function WtComponentSandbox() {
         </Dialog>
       </WtSection>
 
-      <WtSection id="alert-dialog" title="Alert Dialog">
+      <WtSection id="alert-dialog" title="Alert Dialog" variant="high">
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button id="wt-alert-dialog-trigger" type="button" variant="destructive">
+            <Button
+              {...wtControl("wt-alert-dialog-trigger", "Abrir Alert Dialog")}
+              type="button"
+              variant="destructive"
+            >
               Abrir Alert Dialog
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent id="wt-alert-dialog-content">
+          <AlertDialogContent
+            {...wtControl("wt-alert-dialog-content", "Alert Dialog — conteúdo")}
+          >
             <AlertDialogHeader>
               <AlertDialogTitle>Confirmar ação?</AlertDialogTitle>
               <AlertDialogDescription>
@@ -180,24 +177,28 @@ export function WtComponentSandbox() {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction>Confirmar</AlertDialogAction>
+              <AlertDialogCancel {...wtControl("wt-alert-dialog-cancelar", "Cancelar")}>
+                Cancelar
+              </AlertDialogCancel>
+              <AlertDialogAction {...wtControl("wt-alert-dialog-confirmar", "Confirmar")}>
+                Confirmar
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
       </WtSection>
 
-      <WtSection id="sonner" title="Sonner (Toast)">
+      <WtSection id="sonner" title="Sonner (Toast)" variant="high">
         <div className="flex flex-wrap gap-2">
           <Button
-            id="wt-sonner-success"
+            {...wtControl("wt-sonner-success", "Toast success")}
             type="button"
             onClick={() => toast.success("Toast success (Sonner)")}
           >
             Toast success
           </Button>
           <Button
-            id="wt-sonner-error"
+            {...wtControl("wt-sonner-error", "Toast error")}
             type="button"
             variant="destructive"
             onClick={() => toast.error("Toast error (Sonner)")}
@@ -205,7 +206,7 @@ export function WtComponentSandbox() {
             Toast error
           </Button>
           <Button
-            id="wt-sonner-info"
+            {...wtControl("wt-sonner-info", "Toast info")}
             type="button"
             variant="secondary"
             onClick={() => toast.info("Toast info (Sonner)")}
@@ -215,28 +216,45 @@ export function WtComponentSandbox() {
         </div>
       </WtSection>
 
-      <WtSection id="tabs" title="Tabs">
-        <Tabs defaultValue="tab-a" id="wt-tabs">
-          <TabsList>
-            <TabsTrigger value="tab-a" id="wt-tabs-trigger-a">
+      <WtSection id="tabs" title="Tabs" variant="high">
+        <Tabs defaultValue="tab-a" {...wtControl("wt-tabs-root", "Tabs")}>
+          <TabsList {...wtName("Tabs — lista")}>
+            <TabsTrigger
+              {...wtControl("wt-tabs-trigger-a", "Aba A")}
+              value="tab-a"
+            >
               Aba A
             </TabsTrigger>
-            <TabsTrigger value="tab-b" id="wt-tabs-trigger-b">
+            <TabsTrigger
+              {...wtControl("wt-tabs-trigger-b", "Aba B")}
+              value="tab-b"
+            >
               Aba B
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="tab-a" id="wt-tabs-content-a" className="mt-2 rounded border p-3 text-sm">
+          <TabsContent
+            {...wtControl("wt-tabs-content-a", "Conteúdo Aba A")}
+            value="tab-a"
+            className="mt-2 rounded border p-3 text-sm"
+          >
             Conteúdo da Aba A (Tabs).
           </TabsContent>
-          <TabsContent value="tab-b" id="wt-tabs-content-b" className="mt-2 rounded border p-3 text-sm">
+          <TabsContent
+            {...wtControl("wt-tabs-content-b", "Conteúdo Aba B")}
+            value="tab-b"
+            className="mt-2 rounded border p-3 text-sm"
+          >
             Conteúdo da Aba B (Tabs).
           </TabsContent>
         </Tabs>
       </WtSection>
 
-      <WtSection id="skeleton" title="Skeleton">
+      <WtSection id="skeleton" title="Skeleton" variant="high">
         <Button
-          id="wt-skeleton-toggle"
+          {...wtControl(
+            "wt-skeleton-toggle",
+            showSkeleton ? "Ocultar Skeleton" : "Mostrar Skeleton"
+          )}
           type="button"
           variant="outline"
           className="mb-3"
@@ -245,7 +263,7 @@ export function WtComponentSandbox() {
           {showSkeleton ? "Ocultar Skeleton" : "Mostrar Skeleton"}
         </Button>
         {showSkeleton ? (
-          <div id="wt-skeleton-demo" className="space-y-3">
+          <div {...wtControl("wt-skeleton-demo", "Skeleton — carregando")} className="space-y-3">
             <p className="text-sm font-medium text-foreground">
               Carregando registro de teste…
             </p>
@@ -261,7 +279,10 @@ export function WtComponentSandbox() {
             </p>
           </div>
         ) : (
-          <div className="space-y-1 rounded-md border bg-white p-3 text-sm">
+          <div
+            {...wtControl("wt-skeleton-loaded", "Skeleton — conteúdo carregado")}
+            className="space-y-1 rounded-md border bg-white p-3 text-sm"
+          >
             <p>
               <span className="font-medium">Registro:</span>{" "}
               {skeletonPreviewContent.titulo}
@@ -282,32 +303,46 @@ export function WtComponentSandbox() {
         )}
       </WtSection>
 
-      <WtSection id="context-menu" title="Context Menu">
+      <WtSection id="context-menu" title="Context Menu" variant="high">
         <ContextMenu>
           <ContextMenuTrigger
-            id="wt-context-menu-trigger"
+            {...wtControl("wt-context-menu-trigger", "Context Menu — área")}
             className="flex h-24 w-full max-w-md items-center justify-center rounded-md border bg-muted/40 text-sm text-muted-foreground"
           >
             Clique com o botão direito aqui
           </ContextMenuTrigger>
-          <ContextMenuContent id="wt-context-menu-content">
-            <ContextMenuItem>Visualizar (sandbox)</ContextMenuItem>
-            <ContextMenuItem>Editar (sandbox)</ContextMenuItem>
-            <ContextMenuItem className="text-destructive focus:text-destructive">
+          <ContextMenuContent {...wtControl("wt-context-menu-content", "Context Menu — menu")}>
+            <ContextMenuItem {...wtName("Visualizar (sandbox)")}>
+              Visualizar (sandbox)
+            </ContextMenuItem>
+            <ContextMenuItem {...wtName("Editar (sandbox)")}>
+              Editar (sandbox)
+            </ContextMenuItem>
+            <ContextMenuItem
+              {...wtName("Excluir (sandbox)")}
+              className="text-destructive focus:text-destructive"
+            >
               Excluir (sandbox)
             </ContextMenuItem>
           </ContextMenuContent>
         </ContextMenu>
       </WtSection>
 
-      <WtSection id="combobox" title="Combobox">
+      <WtSection id="combobox" title="Combobox" variant="high">
         <div className="max-w-sm">
+          <Label htmlFor="wt-combobox-control" {...wtName("Cliente (Combobox)")}>
+            Cliente (Combobox)
+          </Label>
           <Combobox
-            id="wt-combobox"
+            id="wt-combobox-control"
+            name="cliente_combobox"
+            data-wt-name="Cliente (Combobox)"
+            aria-label="Cliente (Combobox)"
             options={comboboxOptions}
             value={comboboxValue}
             onValueChange={setComboboxValue}
             placeholder="Selecione um cliente (Combobox)"
+            className="mt-2"
           />
           <p className="mt-2 font-mono text-xs text-muted-foreground">
             Valor: {comboboxValue || "(vazio)"}
@@ -315,10 +350,10 @@ export function WtComponentSandbox() {
         </div>
       </WtSection>
 
-      <WtSection id="form-textarea" title="Form + Textarea">
+      <WtSection id="form-textarea" title="Form + Textarea" variant="high">
         <Form {...form}>
           <form
-            id="wt-form"
+            {...wtControl("wt-form", "Form sandbox", { nameAttr: "wt_form" })}
             onSubmit={form.handleSubmit(onSubmitForm)}
             className="max-w-md space-y-4"
           >
@@ -327,10 +362,18 @@ export function WtComponentSandbox() {
               name="cliente"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Cliente (via FormField)</FormLabel>
+                  <FormLabel
+                    htmlFor="wt-form-combobox-control"
+                    {...wtName("Cliente (via FormField)")}
+                  >
+                    Cliente (via FormField)
+                  </FormLabel>
                   <FormControl>
                     <Combobox
-                      id="wt-form-combobox"
+                      id="wt-form-combobox-control"
+                      name="cliente"
+                      data-wt-name="Cliente (via FormField)"
+                      aria-label="Cliente (via FormField)"
                       options={comboboxOptions}
                       value={field.value}
                       onValueChange={field.onChange}
@@ -346,24 +389,33 @@ export function WtComponentSandbox() {
               name="observacao"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Observação (Textarea)</FormLabel>
+                  <FormLabel
+                    htmlFor="wt-form-textarea-control"
+                    {...wtName("Observação (Textarea)")}
+                  >
+                    Observação (Textarea)
+                  </FormLabel>
                   <FormControl>
                     <Textarea
-                      id="wt-form-textarea"
                       placeholder="Digite uma observação de teste..."
                       {...field}
+                      id="wt-form-textarea-control"
+                      {...wtName("Observação (Textarea)")}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button id="wt-form-submit" type="submit">
+            <Button
+              {...wtControl("wt-form-submit", "Enviar Form (sandbox)")}
+              type="submit"
+            >
               Enviar Form (sandbox)
             </Button>
             {formSuccess ? (
               <p
-                id="wt-form-success"
+                {...wtControl("wt-form-success", "Envio confirmado")}
                 role="status"
                 className="rounded-md border border-green-600 bg-green-50 px-3 py-2 text-sm font-medium text-green-800"
               >

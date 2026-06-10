@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useAppShell } from "@/components/app-shell";
+import { wtControl, wtName } from "@/lib/wt-test-attrs";
 
 export function AppHeader({
   title,
@@ -23,18 +24,21 @@ export function AppHeader({
   const shell = useAppShell();
 
   return (
-    <header className="flex h-14 shrink-0 items-center gap-2 border-b bg-white px-6">
+    <header
+      {...wtControl("wt-header", "Cabeçalho da aplicação")}
+      className="flex h-14 shrink-0 items-center gap-2 border-b bg-white px-6"
+    >
       {showSidebarTrigger && shell ? (
         <Button
           type="button"
           variant="ghost"
           size="icon"
           className="text-muted-foreground hover:text-foreground"
-          aria-label={
-            shell.sidebarOpen
-              ? "Ocultar menu lateral"
-              : "Mostrar menu lateral"
-          }
+          {...wtControl(
+            "wt-header-sidebar-toggle",
+            shell.sidebarOpen ? "Ocultar menu lateral" : "Mostrar menu lateral",
+            { aria: true }
+          )}
           data-sidebar="trigger"
           onClick={shell.toggleSidebar}
         >
@@ -46,7 +50,9 @@ export function AppHeader({
         {showSidebarTrigger && shell ? (
           <Separator orientation="vertical" className="h-6 shrink-0" />
         ) : null}
-        <h1 className="truncate text-lg font-semibold">{title}</h1>
+        <h1 className="truncate text-lg font-semibold" {...wtName(title)}>
+          {title}
+        </h1>
       </div>
 
       <DropdownMenu>
@@ -56,7 +62,9 @@ export function AppHeader({
             variant="outline"
             size="sm"
             className="gap-2"
-            aria-label="Abrir menu do usuário simulado"
+            {...wtControl("wt-header-menu-usuario", "Abrir menu do usuário simulado", {
+              aria: true,
+            })}
           >
             <User className="h-4 w-4 shrink-0" />
             WT Test User
@@ -67,7 +75,7 @@ export function AppHeader({
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Button
-              id="wt-dropdown-perfil"
+              {...wtControl("wt-dropdown-perfil", "Perfil (simulado)")}
               type="button"
               variant="ghost"
               className="h-auto w-full justify-start px-2 py-1.5 font-normal"
@@ -77,7 +85,7 @@ export function AppHeader({
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Button
-              id="wt-dropdown-preferencias"
+              {...wtControl("wt-dropdown-preferencias", "Preferências (simulado)")}
               type="button"
               variant="ghost"
               className="h-auto w-full justify-start px-2 py-1.5 font-normal"
@@ -88,7 +96,7 @@ export function AppHeader({
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Button
-              id="wt-dropdown-sair"
+              {...wtControl("wt-dropdown-sair", "Sair (simulado)")}
               type="button"
               variant="ghost"
               className="h-auto w-full justify-start px-2 py-1.5 font-normal text-destructive hover:text-destructive"

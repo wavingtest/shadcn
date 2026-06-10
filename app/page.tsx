@@ -3,12 +3,16 @@ import { ArrowRight, Info } from "lucide-react";
 import { AppHeader } from "@/components/app-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { wtControl, wtZone } from "@/lib/wt-test-attrs";
 
 export default function HomePage() {
   return (
     <>
       <AppHeader title="Início" />
-      <main className="flex-1 p-6">
+      <main
+        {...wtZone("wt-pagina-inicio", "Página Início")}
+        className="flex-1 p-6"
+      >
         <Card className="overflow-hidden">
           <div className="h-1 w-full bg-primary" />
           <div className="p-6">
@@ -28,7 +32,10 @@ export default function HomePage() {
             </p>
 
             <Button asChild>
-              <Link href="/registros/registros">
+              <Link
+                href="/registros/registros"
+                {...wtControl("wt-home-ir-registros", "Ir para página de teste")}
+              >
                 <ArrowRight className="mr-2 h-4 w-4" />
                 Ir para página de teste
               </Link>
