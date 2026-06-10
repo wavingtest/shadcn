@@ -130,7 +130,7 @@ export function RegistroDrawer({
       >
         <SheetHeader>
           <SheetTitle {...wtName("Novo Registro")}>Novo Registro</SheetTitle>
-          <SheetDescription>
+          <SheetDescription {...wtName("Preencha os dados para criar um novo registro de teste")}>
             Preencha os dados para criar um novo registro de teste
           </SheetDescription>
         </SheetHeader>
@@ -377,7 +377,7 @@ export function RegistroDrawer({
               >
                 Compartilha recursos
               </Label>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground" {...wtName("Indicação simulada para o ambiente de teste (opcional)")}>
                 Indicação simulada para o ambiente de teste (opcional).
               </p>
             </div>

@@ -3,7 +3,7 @@ import { ArrowRight, Info } from "lucide-react";
 import { AppHeader } from "@/components/app-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { wtControl, wtZone } from "@/lib/wt-test-attrs";
+import { wtControl, wtName, wtZone } from "@/lib/wt-test-attrs";
 
 export default function HomePage() {
   return (
@@ -18,14 +18,16 @@ export default function HomePage() {
           <div className="p-6">
             <div className="mb-4 flex items-center gap-2">
               <Info className="h-4 w-4 text-foreground" />
-              <h2 className="text-base font-semibold">Objetivo do ambiente</h2>
+              <h2 className="text-base font-semibold" {...wtName("Objetivo do ambiente")}>
+                Objetivo do ambiente
+              </h2>
             </div>
 
-            <p className="mb-3 text-sm text-foreground">
+            <p className="mb-3 text-sm text-foreground" {...wtName("Descrição do ambiente de validação WT")}>
               Este site privado simula o comportamento de componentes da
               biblioteca <strong>shadcn/ui</strong> para validação do WT.
             </p>
-            <p className="mb-5 text-sm text-foreground">
+            <p className="mb-5 text-sm text-foreground" {...wtName("Instrução para acessar a página de Registros")}>
               Para testar o fluxo principal de cadastro e consulta, navegue no
               menu lateral em <strong>Módulos e Registros &gt; Registros</strong>{" "}
               ou clique no botão abaixo.

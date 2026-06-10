@@ -16,7 +16,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { wtControl, wtZone } from "@/lib/wt-test-attrs";
+import { wtControl, wtName, wtZone } from "@/lib/wt-test-attrs";
 
 type SubItem = { label: string; icon: LucideIcon };
 type MenuItem = {
@@ -96,12 +96,15 @@ export function AppSidebar({ collapsed = false }: { collapsed?: boolean }) {
           collapsed ? "justify-center px-2" : "gap-2 px-4"
         )}
       >
-        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground font-bold">
+        <div
+          className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground font-bold"
+          {...wtName("Logo WT")}
+        >
           WT
         </div>
         <div className={cn("flex flex-col", collapsed && "hidden")}>
-          <span className="text-sm font-semibold leading-none">WT Private</span>
-          <span className="text-xs text-muted-foreground">shadcn/ui</span>
+          <span className="text-sm font-semibold leading-none" {...wtName("WT Private")}>WT Private</span>
+          <span className="text-xs text-muted-foreground" {...wtName("shadcn/ui")}>shadcn/ui</span>
         </div>
       </div>
 
@@ -250,6 +253,7 @@ export function AppSidebar({ collapsed = false }: { collapsed?: boolean }) {
           "border-t py-3 text-xs text-muted-foreground",
           collapsed ? "px-2 text-center" : "px-4"
         )}
+        {...wtName("Sandbox de validação WT")}
       >
         {collapsed ? "WT" : "Sandbox de validação WT"}
       </div>

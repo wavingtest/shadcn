@@ -102,7 +102,7 @@ export function WtComponentSandboxMedium() {
             </Label>
           </div>
         </RadioGroup>
-        <p className="mt-2 font-mono text-xs text-muted-foreground">
+        <p className="mt-2 font-mono text-xs text-muted-foreground" {...wtName(`Radio selecionado: ${radioValue}`)}>
           Selecionado: {radioValue}
         </p>
       </WtSection>
@@ -114,7 +114,9 @@ export function WtComponentSandboxMedium() {
         >
           <div className="space-y-2 p-4 text-sm">
             {Array.from({ length: 12 }, (_, i) => (
-              <p key={i}>Linha {i + 1} — conteúdo rolável do Scroll Area.</p>
+              <p key={i} {...wtName(`Linha ${i + 1} do Scroll Area`)}>
+                Linha {i + 1} — conteúdo rolável do Scroll Area.
+              </p>
             ))}
           </div>
         </ScrollArea>
@@ -178,7 +180,7 @@ export function WtComponentSandboxMedium() {
               WT
             </AvatarFallback>
           </Avatar>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground" {...wtName("Avatar com fallback WT quando não há imagem")}>
             Avatar com fallback &quot;WT&quot; quando não há imagem.
           </p>
         </div>
@@ -220,8 +222,8 @@ export function WtComponentSandboxMedium() {
             {...wtControl("wt-hover-card-content", "Hover Card — preview")}
             className="w-80"
           >
-            <p className="text-sm font-medium">Registro Alfa</p>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="text-sm font-medium" {...wtName("Hover Card — Registro Alfa")}>Registro Alfa</p>
+            <p className="mt-1 text-sm text-muted-foreground" {...wtName("Hover Card — Preview do registro")}>
               Preview rápido: Cliente A · Situação Ativo · Responsável A.
             </p>
           </HoverCardContent>

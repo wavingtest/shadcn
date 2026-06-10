@@ -76,7 +76,7 @@ export function WtComponentSandboxLow() {
             max={100}
             step={1}
           />
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground" {...wtName(`Valor do Slider: ${sliderValue[0]}%`)}>
             Valor: {sliderValue[0]}%
           </p>
         </div>
@@ -120,7 +120,7 @@ export function WtComponentSandboxLow() {
             <Underline className="h-4 w-4" />
           </ToggleGroupItem>
         </ToggleGroup>
-        <p className="mt-2 font-mono text-xs text-muted-foreground">
+        <p className="mt-2 font-mono text-xs text-muted-foreground" {...wtName(`Formato selecionado: ${toggleFormat || "nenhum"}`)}>
           Formato: {toggleFormat || "(nenhum)"}
         </p>
       </WtSection>
@@ -147,7 +147,7 @@ export function WtComponentSandboxLow() {
               <InputOTPSlot index={5} />
             </InputOTPGroup>
           </InputOTP>
-          <p className="font-mono text-xs text-muted-foreground">
+          <p className="font-mono text-xs text-muted-foreground" {...wtName(`OTP digitado: ${otp || "vazio"}`)}>
             Digitado: {otp || "(vazio)"}
           </p>
         </div>
@@ -156,7 +156,10 @@ export function WtComponentSandboxLow() {
       <WtSection id="aspect-ratio" title="Aspect Ratio" variant="low">
         <div className="w-full max-w-md">
           <AspectRatio ratio={16 / 9} {...wtControl("wt-aspect-ratio-box", "Aspect Ratio 16:9")}>
-            <div className="flex h-full w-full items-center justify-center rounded-md bg-primary/20 text-sm font-medium">
+            <div
+              className="flex h-full w-full items-center justify-center rounded-md bg-primary/20 text-sm font-medium"
+              {...wtName("Área 16:9 (Aspect Ratio)")}
+            >
               Área 16:9 (Aspect Ratio)
             </div>
           </AspectRatio>

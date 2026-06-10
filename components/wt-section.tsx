@@ -1,5 +1,5 @@
 import * as React from "react";
-import { wtSection } from "@/lib/wt-test-attrs";
+import { wtName, wtSection } from "@/lib/wt-test-attrs";
 import { cn } from "@/lib/utils";
 
 const variantStyles = {
@@ -39,6 +39,7 @@ export function WtSection({
       )}
     >
       <h3
+        {...wtName(`[WT] ${title}`)}
         className={cn(
           "mb-3 font-mono text-sm font-bold uppercase tracking-wide",
           styles.title
