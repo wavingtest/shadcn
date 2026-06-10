@@ -32,7 +32,7 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { wtControl, wtName, wtZone } from "@/lib/wt-test-attrs";
+import { wtControl, wtLabel, wtName, wtZone } from "@/lib/wt-test-attrs";
 
 const chartData = [
   { mes: "Jan", registros: 4 },
@@ -76,7 +76,7 @@ export function WtComponentSandboxLow() {
             max={100}
             step={1}
           />
-          <p className="text-sm text-muted-foreground" {...wtName(`Valor do Slider: ${sliderValue[0]}%`)}>
+          <p className="text-sm text-muted-foreground" {...wtLabel(`Valor do Slider: ${sliderValue[0]}%`)}>
             Valor: {sliderValue[0]}%
           </p>
         </div>
@@ -120,7 +120,7 @@ export function WtComponentSandboxLow() {
             <Underline className="h-4 w-4" />
           </ToggleGroupItem>
         </ToggleGroup>
-        <p className="mt-2 font-mono text-xs text-muted-foreground" {...wtName(`Formato selecionado: ${toggleFormat || "nenhum"}`)}>
+        <p className="mt-2 font-mono text-xs text-muted-foreground" {...wtLabel(`Formato selecionado: ${toggleFormat || "nenhum"}`)}>
           Formato: {toggleFormat || "(nenhum)"}
         </p>
       </WtSection>
@@ -147,7 +147,7 @@ export function WtComponentSandboxLow() {
               <InputOTPSlot index={5} />
             </InputOTPGroup>
           </InputOTP>
-          <p className="font-mono text-xs text-muted-foreground" {...wtName(`OTP digitado: ${otp || "vazio"}`)}>
+          <p className="font-mono text-xs text-muted-foreground" {...wtLabel(`OTP digitado: ${otp || "vazio"}`)}>
             Digitado: {otp || "(vazio)"}
           </p>
         </div>
@@ -158,7 +158,7 @@ export function WtComponentSandboxLow() {
           <AspectRatio ratio={16 / 9} {...wtControl("wt-aspect-ratio-box", "Aspect Ratio 16:9")}>
             <div
               className="flex h-full w-full items-center justify-center rounded-md bg-primary/20 text-sm font-medium"
-              {...wtName("Área 16:9 (Aspect Ratio)")}
+              {...wtLabel("Área 16:9 (Aspect Ratio)")}
             >
               Área 16:9 (Aspect Ratio)
             </div>

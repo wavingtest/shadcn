@@ -42,7 +42,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { SEED_REGISTROS } from "@/lib/mock-registros";
-import { wtControl, wtName, wtZone } from "@/lib/wt-test-attrs";
+import { wtControl, wtLabel, wtName, wtZone } from "@/lib/wt-test-attrs";
 import { RegistroDrawer } from "./_components/registro-drawer";
 import { WtComponentSandbox } from "./_components/wt-component-sandbox";
 import { WtComponentSandboxMedium } from "./_components/wt-component-sandbox-medium";
@@ -255,10 +255,10 @@ export default function DemandasPage() {
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-semibold tracking-tight" {...wtName("Registros")}>
+            <h2 className="text-2xl font-semibold tracking-tight" {...wtLabel("Registros")}>
               Registros
             </h2>
-            <p className="text-sm text-muted-foreground" {...wtName("Gerencie os registros de teste do ambiente")}>
+            <p className="text-sm text-muted-foreground" {...wtLabel("Gerencie os registros de teste do ambiente")}>
               Gerencie os registros de teste do ambiente
             </p>
           </div>
@@ -343,7 +343,7 @@ export default function DemandasPage() {
                 Limpar
               </Button>
             </div>
-            <p className="text-xs text-muted-foreground md:col-span-full" {...wtName("Resumo do filtro de data")}>
+            <p className="text-xs text-muted-foreground md:col-span-full" {...wtLabel("Resumo do filtro de data")}>
               {resumoFiltroData}
             </p>
           </CardContent>
@@ -351,7 +351,7 @@ export default function DemandasPage() {
 
         <Card {...wtZone("wt-lista-registros", "Lista de registros")}>
           <CardHeader className="flex-row items-center justify-between space-y-0">
-            <CardTitle {...wtName("Lista de Registros")}>Lista de Registros</CardTitle>
+            <CardTitle {...wtLabel("Lista de Registros")}>Lista de Registros</CardTitle>
             <div className="flex items-center gap-2">
               <Select
                 value={orderBy}
@@ -397,16 +397,16 @@ export default function DemandasPage() {
             <Table {...wtControl("wt-tabela-registros", "Tabela de registros")}>
               <TableHeader>
                 <TableRow>
-                  <TableHead {...wtName("Coluna Registro")}>Registro</TableHead>
-                  <TableHead {...wtName("Coluna Código")}>Código</TableHead>
-                  <TableHead {...wtName("Coluna Cliente")}>Cliente</TableHead>
-                  <TableHead {...wtName("Coluna Categoria")}>Categoria</TableHead>
-                  <TableHead {...wtName("Coluna Contato")}>Contato</TableHead>
-                  <TableHead {...wtName("Coluna Responsável")}>Responsável</TableHead>
-                  <TableHead {...wtName("Coluna Tipo de Registro")}>Tipo de Registro</TableHead>
-                  <TableHead {...wtName("Coluna Metodologia")}>Metodologia</TableHead>
-                  <TableHead {...wtName("Coluna Situação")}>Situação</TableHead>
-                  <TableHead className="w-[100px] text-right" {...wtName("Coluna Ações")}>Ações</TableHead>
+                  <TableHead {...wtLabel("Coluna Registro")}>Registro</TableHead>
+                  <TableHead {...wtLabel("Coluna Código")}>Código</TableHead>
+                  <TableHead {...wtLabel("Coluna Cliente")}>Cliente</TableHead>
+                  <TableHead {...wtLabel("Coluna Categoria")}>Categoria</TableHead>
+                  <TableHead {...wtLabel("Coluna Contato")}>Contato</TableHead>
+                  <TableHead {...wtLabel("Coluna Responsável")}>Responsável</TableHead>
+                  <TableHead {...wtLabel("Coluna Tipo de Registro")}>Tipo de Registro</TableHead>
+                  <TableHead {...wtLabel("Coluna Metodologia")}>Metodologia</TableHead>
+                  <TableHead {...wtLabel("Coluna Situação")}>Situação</TableHead>
+                  <TableHead className="w-[100px] text-right" {...wtLabel("Coluna Ações")}>Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -415,7 +415,7 @@ export default function DemandasPage() {
                     <TableCell
                       colSpan={10}
                       className="py-12 text-center text-sm text-muted-foreground"
-                      {...wtName("Nenhum registro encontrado")}
+                      {...wtLabel("Nenhum registro encontrado")}
                     >
                       Nenhum registro encontrado
                     </TableCell>
@@ -423,23 +423,23 @@ export default function DemandasPage() {
                 ) : (
                   pageRows.map((demanda) => (
                     <TableRow key={demanda.id}>
-                      <TableCell {...wtName(`Registro: ${demanda.demanda}`)}>{demanda.demanda}</TableCell>
-                      <TableCell {...wtName(`Código: ${demanda.sigla}`)}>{demanda.sigla}</TableCell>
-                      <TableCell {...wtName(`Cliente: ${demanda.cliente}`)}>{demanda.cliente}</TableCell>
-                      <TableCell {...wtName(`Categoria: ${demanda.centroCusto}`)}>{demanda.centroCusto}</TableCell>
+                      <TableCell {...wtLabel(`Registro: ${demanda.demanda}`)}>{demanda.demanda}</TableCell>
+                      <TableCell {...wtLabel(`Código: ${demanda.sigla}`)}>{demanda.sigla}</TableCell>
+                      <TableCell {...wtLabel(`Cliente: ${demanda.cliente}`)}>{demanda.cliente}</TableCell>
+                      <TableCell {...wtLabel(`Categoria: ${demanda.centroCusto}`)}>{demanda.centroCusto}</TableCell>
                       <TableCell
                         className="text-muted-foreground"
-                        {...wtName(`Contato: ${demanda.preposto.trim() ? demanda.preposto : "não informado"}`)}
+                        {...wtLabel(`Contato: ${demanda.preposto.trim() ? demanda.preposto : "não informado"}`)}
                       >
                         {demanda.preposto.trim() ? demanda.preposto : "—"}
                       </TableCell>
-                      <TableCell {...wtName(`Responsável: ${demanda.gerente}`)}>{demanda.gerente}</TableCell>
-                      <TableCell {...wtName(`Tipo: ${demanda.tipoServico}`)}>{demanda.tipoServico}</TableCell>
-                      <TableCell {...wtName(`Metodologia: ${demanda.metodologia}`)}>{demanda.metodologia}</TableCell>
+                      <TableCell {...wtLabel(`Responsável: ${demanda.gerente}`)}>{demanda.gerente}</TableCell>
+                      <TableCell {...wtLabel(`Tipo: ${demanda.tipoServico}`)}>{demanda.tipoServico}</TableCell>
+                      <TableCell {...wtLabel(`Metodologia: ${demanda.metodologia}`)}>{demanda.metodologia}</TableCell>
                       <TableCell>
                         <Badge
                           variant={situacaoBadgeVariant(demanda.situacao)}
-                          {...wtName(`Situação: ${labelSituacao(demanda.situacao)}`)}
+                          {...wtLabel(`Situação: ${labelSituacao(demanda.situacao)}`)}
                         >
                           {labelSituacao(demanda.situacao)}
                         </Badge>
@@ -489,7 +489,7 @@ export default function DemandasPage() {
             </Table>
             {showPagination ? (
               <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm text-muted-foreground" {...wtName("Contador de registros exibidos")}>
+                <p className="text-sm text-muted-foreground" {...wtLabel("Contador de registros exibidos")}>
                   Mostrando{" "}
                   <span className="font-medium text-foreground">
                     {(effectivePage - 1) * PAGE_SIZE + 1}
@@ -523,7 +523,7 @@ export default function DemandasPage() {
                     <PaginationItem>
                       <span
                         className="px-3 text-sm text-muted-foreground"
-                        {...wtName(`Página ${effectivePage} de ${totalPages}`)}
+                        {...wtLabel(`Página ${effectivePage} de ${totalPages}`)}
                       >
                         Página {effectivePage} de {totalPages}
                       </span>

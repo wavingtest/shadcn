@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useAppShell } from "@/components/app-shell";
-import { wtControl, wtName } from "@/lib/wt-test-attrs";
+import { wtControl, wtLabel, wtName } from "@/lib/wt-test-attrs";
 
 export function AppHeader({
   title,
@@ -50,7 +50,7 @@ export function AppHeader({
         {showSidebarTrigger && shell ? (
           <Separator orientation="vertical" className="h-6 shrink-0" />
         ) : null}
-        <h1 className="truncate text-lg font-semibold" {...wtName(title)}>
+        <h1 className="truncate text-lg font-semibold" {...wtLabel(title)}>
           {title}
         </h1>
       </div>

@@ -10,7 +10,19 @@ export function wtName(name: string) {
   return { "data-wt-name": name } as const;
 }
 
-/** Id único + tag WT + opcional `name` / `aria-label`. */
+/**
+ * `aria-label` + `data-wt-name`. Use em textos estáticos (h2, p, h3, títulos,
+ * células, badges) onde não há `<label>` associado. O WT usa `aria-label` como
+ * "label" (prioridade 1) e exibe o texto legível em vez da tag.
+ */
+export function wtLabel(name: string) {
+  return {
+    "aria-label": name,
+    ...wtName(name),
+  } as const;
+}
+
+/** Id único + `data-wt-name` + opcional `name` HTML / `aria-label`. */
 export function wtControl(
   id: string,
   name: string,

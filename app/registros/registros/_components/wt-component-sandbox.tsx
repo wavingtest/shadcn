@@ -52,7 +52,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { wtControl, wtName, wtZone } from "@/lib/wt-test-attrs";
+import { wtControl, wtLabel, wtName, wtZone } from "@/lib/wt-test-attrs";
 
 const comboboxOptions = [
   { value: "cliente-a", label: "Cliente A" },
@@ -108,8 +108,8 @@ export function WtComponentSandbox() {
       <WtSection id="alert" title="Alert" variant="high">
         <Alert {...wtControl("wt-alert-default", "Alert (default)")}>
           <Info className="h-4 w-4" />
-          <AlertTitle {...wtName("Alert (default)")}>Alert (default)</AlertTitle>
-          <AlertDescription {...wtName("Mensagem inline de exemplo para validação do componente Alert")}>
+          <AlertTitle {...wtLabel("Alert (default)")}>Alert (default)</AlertTitle>
+          <AlertDescription {...wtLabel("Mensagem inline de exemplo para validação do componente Alert")}>
             Mensagem inline de exemplo para validação do componente Alert.
           </AlertDescription>
         </Alert>
@@ -118,8 +118,8 @@ export function WtComponentSandbox() {
           {...wtControl("wt-alert-destructive", "Alert (destructive)")}
           className="mt-3"
         >
-          <AlertTitle {...wtName("Alert (destructive)")}>Alert (destructive)</AlertTitle>
-          <AlertDescription {...wtName("Variante destrutiva para cenários de erro")}>
+          <AlertTitle {...wtLabel("Alert (destructive)")}>Alert (destructive)</AlertTitle>
+          <AlertDescription {...wtLabel("Variante destrutiva para cenários de erro")}>
             Variante destrutiva para cenários de erro.
           </AlertDescription>
         </Alert>
@@ -138,8 +138,8 @@ export function WtComponentSandbox() {
           </DialogTrigger>
           <DialogContent {...wtControl("wt-dialog-content", "Dialog — conteúdo")}>
             <DialogHeader>
-              <DialogTitle {...wtName("Dialog — título de teste")}>Dialog — título de teste</DialogTitle>
-              <DialogDescription {...wtName("Conteúdo do modal Dialog para o WavingTest")}>
+              <DialogTitle {...wtLabel("Dialog — título de teste")}>Dialog — título de teste</DialogTitle>
+              <DialogDescription {...wtLabel("Conteúdo do modal Dialog para o WavingTest")}>
                 Conteúdo do modal Dialog para o WavingTest.
               </DialogDescription>
             </DialogHeader>
@@ -171,8 +171,8 @@ export function WtComponentSandbox() {
             {...wtControl("wt-alert-dialog-content", "Alert Dialog — conteúdo")}
           >
             <AlertDialogHeader>
-              <AlertDialogTitle {...wtName("Confirmar ação?")}>Confirmar ação?</AlertDialogTitle>
-              <AlertDialogDescription {...wtName("Alert Dialog para confirmações destrutivas (sandbox)")}>
+              <AlertDialogTitle {...wtLabel("Confirmar ação?")}>Confirmar ação?</AlertDialogTitle>
+              <AlertDialogDescription {...wtLabel("Alert Dialog para confirmações destrutivas (sandbox)")}>
                 Alert Dialog para confirmações destrutivas (sandbox).
               </AlertDialogDescription>
             </AlertDialogHeader>
@@ -264,7 +264,7 @@ export function WtComponentSandbox() {
         </Button>
         {showSkeleton ? (
           <div {...wtControl("wt-skeleton-demo", "Skeleton — carregando")} className="space-y-3">
-            <p className="text-sm font-medium text-foreground" {...wtName("Carregando registro de teste")}>
+            <p className="text-sm font-medium text-foreground" {...wtLabel("Carregando registro de teste")}>
               Carregando registro de teste…
             </p>
             <div className="space-y-2 rounded-md border bg-muted/30 p-3">
@@ -273,7 +273,7 @@ export function WtComponentSandbox() {
               <Skeleton className="h-4 w-[180px]" />
               <Skeleton className="h-4 w-[120px]" />
             </div>
-            <p className="text-xs text-muted-foreground" {...wtName("Prévia do conteúdo do Skeleton")}>
+            <p className="text-xs text-muted-foreground" {...wtLabel("Prévia do conteúdo do Skeleton")}>
               Conteúdo que será exibido: {skeletonPreviewContent.titulo} ·{" "}
               {skeletonPreviewContent.cliente} · {skeletonPreviewContent.situacao}
             </p>
@@ -344,7 +344,7 @@ export function WtComponentSandbox() {
             placeholder="Selecione um cliente (Combobox)"
             className="mt-2"
           />
-          <p className="mt-2 font-mono text-xs text-muted-foreground" {...wtName("Valor selecionado no Combobox")}>
+          <p className="mt-2 font-mono text-xs text-muted-foreground" {...wtLabel("Valor selecionado no Combobox")}>
             Valor: {comboboxValue || "(vazio)"}
           </p>
         </div>

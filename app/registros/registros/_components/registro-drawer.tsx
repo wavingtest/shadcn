@@ -22,7 +22,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { wtControl, wtName, wtZone } from "@/lib/wt-test-attrs";
+import { wtControl, wtLabel, wtName, wtZone } from "@/lib/wt-test-attrs";
 
 const clientes = [
   { value: "Cliente A", label: "Cliente A" },
@@ -129,8 +129,8 @@ export function RegistroDrawer({
         className="w-full sm:max-w-xl"
       >
         <SheetHeader>
-          <SheetTitle {...wtName("Novo Registro")}>Novo Registro</SheetTitle>
-          <SheetDescription {...wtName("Preencha os dados para criar um novo registro de teste")}>
+          <SheetTitle {...wtLabel("Novo Registro")}>Novo Registro</SheetTitle>
+          <SheetDescription {...wtLabel("Preencha os dados para criar um novo registro de teste")}>
             Preencha os dados para criar um novo registro de teste
           </SheetDescription>
         </SheetHeader>
@@ -377,7 +377,7 @@ export function RegistroDrawer({
               >
                 Compartilha recursos
               </Label>
-              <p className="text-xs text-muted-foreground" {...wtName("Indicação simulada para o ambiente de teste (opcional)")}>
+              <p className="text-xs text-muted-foreground" {...wtLabel("Indicação simulada para o ambiente de teste (opcional)")}>
                 Indicação simulada para o ambiente de teste (opcional).
               </p>
             </div>
