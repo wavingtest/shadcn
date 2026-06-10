@@ -312,11 +312,11 @@ export default function DemandasPage() {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="wt-filtro-data" {...wtName("Data de criação")}>
+              <Label htmlFor="input-searchDate" {...wtName("Data de criação")}>
                 Data de criação
               </Label>
               <DatePicker
-                {...wtControl("wt-filtro-data", "Data de criação", {
+                {...wtControl("input-searchDate", "Data de criação", {
                   nameAttr: "searchDate",
                 })}
                 value={searchDateInput}
@@ -361,7 +361,7 @@ export default function DemandasPage() {
                 }}
               >
                 <SelectTrigger
-                  {...wtControl("wt-ordenacao-campo", "Ordenar por", {
+                  {...wtControl("select-orderBy", "Ordenar por", {
                     nameAttr: "orderBy",
                   })}
                   className="w-[200px]"

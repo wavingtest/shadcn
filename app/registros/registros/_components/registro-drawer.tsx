@@ -358,7 +358,7 @@ export function RegistroDrawer({
 
           <div className="flex items-start gap-3 rounded-md border border-input bg-muted/40 px-4 py-3">
             <Checkbox
-              {...wtControl("wt-drawer-compartilha", "Compartilha recursos", {
+              {...wtControl("checkbox-compartilha", "Compartilha recursos", {
                 nameAttr: "compartilhaProfissionais",
               })}
               checked={formState.compartilhaProfissionais}
@@ -371,7 +371,7 @@ export function RegistroDrawer({
             />
             <div className="grid gap-1">
               <Label
-                htmlFor="wt-drawer-compartilha"
+                htmlFor="checkbox-compartilha"
                 className="cursor-pointer text-sm font-medium leading-none"
                 {...wtName("Compartilha recursos")}
               >
