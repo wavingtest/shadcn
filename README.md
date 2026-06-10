@@ -70,7 +70,6 @@ Bloco violeta abaixo do sandbox de prioridade alta (`wt-component-sandbox-medium
 | Avatar       | `avatar.tsx`       |
 | Breadcrumb   | `breadcrumb.tsx`   |
 | Hover Card   | `hover-card.tsx`   |
-| Progress     | `progress.tsx`     |
 
 ### Prioridade baixa (sandbox em `/registros/registros`)
 

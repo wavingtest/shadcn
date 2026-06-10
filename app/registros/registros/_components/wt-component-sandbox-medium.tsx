@@ -30,7 +30,6 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
@@ -62,7 +61,6 @@ export function WtComponentSandboxMedium() {
   const [switchOn, setSwitchOn] = React.useState(false);
   const [radioValue, setRadioValue] = React.useState("opcao-a");
   const [collapsibleOpen, setCollapsibleOpen] = React.useState(false);
-  const [progress, setProgress] = React.useState(35);
 
   return (
     <div
@@ -212,33 +210,6 @@ export function WtComponentSandboxMedium() {
             </p>
           </HoverCardContent>
         </HoverCard>
-      </WtSection>
-
-      <WtSection id="progress" title="Progress">
-        <div className="max-w-md space-y-3">
-          <Progress id="wt-progress" value={progress} />
-          <p className="text-sm text-muted-foreground">{progress}% concluído</p>
-          <div className="flex gap-2">
-            <Button
-              id="wt-progress-minus"
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => setProgress((v) => Math.max(0, v - 10))}
-            >
-              -10%
-            </Button>
-            <Button
-              id="wt-progress-plus"
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => setProgress((v) => Math.min(100, v + 10))}
-            >
-              +10%
-            </Button>
-          </div>
-        </div>
       </WtSection>
     </div>
   );
